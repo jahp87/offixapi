@@ -276,5 +276,61 @@ export class SecurityController {
     return {token};
   }
 
+  @post('/api/security/sign-up/bussines', {
+    responses: {
+      '200': {
+        description: 'User',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': User,
+            },
+          },
+        },
+      },
+    },
+  })
+  async createbussines(
+    @requestBody(CredentialsRequestBody) newUserRequest: Credentials,
+  ): Promise<User> {
+    newUserRequest.role = 'bussines';
+
+    // ensure a valid email value and password value
+    validateCredentials(_.pick(newUserRequest, ['email', 'password']));
+
+    // encrypt the password
+    const password = await this.passwordHasher.hashPassword(
+      newUserRequest.password,
+    );
+
+    const isUniqueUser = await this.userRepository.findOne({where: {email: newUserRequest.email}});
+
+    if (isUniqueUser !== null) {
+      throw new HttpErrors.BadRequest('Email value is already taken');
+    }
+
+
+    try {
+      // create the new user
+      const savedUser = await this.userRepository.create(
+        _.omit(newUserRequest, 'password'),
+      );
+
+      // set the password
+      await this.userRepository
+        .userCredentials(savedUser.id)
+        .create({password});
+
+      return savedUser;
+    } catch (error) {
+      // MongoError 11000 duplicate key
+      if (error.code === 11000 && error.errmsg.includes('index: uniqueEmail')) {
+        throw new HttpErrors.Conflict('Email value is already taken');
+      } else {
+        throw error;
+      }
+    }
+  }
+
 
 }
