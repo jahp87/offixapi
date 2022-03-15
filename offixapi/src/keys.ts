@@ -12,7 +12,7 @@ export const STORAGE_DIRECTORY = BindingKey.create<string>
   ('storage.directory');
 
 export namespace TokenServiceConstants {
-  export const TOKEN_SECRET_VALUE = 'b4t1ck3t3r4';
+  export const TOKEN_SECRET_VALUE = '0ff1xp455w04d';
   export const TOKEN_EXPIRES_IN_VALUE = '86000';
 }
 

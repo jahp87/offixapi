@@ -23,7 +23,7 @@ export class UserRepository extends DefaultCrudRepository<User,
   public readonly userCredentials: HasOneRepositoryFactory<UserCredentials, typeof User.prototype.id>;
 
   constructor(
-    @inject('datasources.ticketeradb') dataSource: OffixdbDataSource,
+    @inject('datasources.offixdb') dataSource: OffixdbDataSource,
     @repository.getter('UserCredentialsRepository')
     protected userCredentialsRepositoryGetter: Getter<UserCredentialsRepository>,
   ) {

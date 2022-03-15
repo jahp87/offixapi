@@ -9,7 +9,7 @@ export class UserCredentialsRepository extends DefaultCrudRepository<
   UserCredentialsRelations
 > {
   constructor(
-    @inject('datasources.ticketeradb') dataSource: OffixdbDataSource,
+    @inject('datasources.offixdb') dataSource: OffixdbDataSource,
   ) {
     super(UserCredentials, dataSource);
   }
