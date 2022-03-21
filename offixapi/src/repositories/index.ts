@@ -5,3 +5,7 @@ export * from './country.repository';
 export * from './state.repository';
 export * from './city.repository';
 export * from './profile.repository';
+export * from './category.repository';
+export * from './brand.repository';
+export * from './product.repository';
+export * from './product-category-relation.repository';
