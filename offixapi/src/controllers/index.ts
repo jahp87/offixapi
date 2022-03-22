@@ -20,3 +20,4 @@ export * from './product-category-relation-category.controller';
 export * from './product-category-relation.controller';
 export * from './product-category.controller';
 export * from './product.controller';
+export * from './product-tax.controller';

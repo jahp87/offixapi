@@ -10,3 +10,5 @@ export * from './category.model';
 export * from './brand.model';
 export * from './product.model';
 export * from './product-category-relation.model';
+export * from './tax.model';
+export * from './product-tax-relation.model';

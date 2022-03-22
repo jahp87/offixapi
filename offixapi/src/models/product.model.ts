@@ -1,6 +1,8 @@
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Category} from './category.model';
 import {ProductCategoryRelation} from './product-category-relation.model';
+import {Tax} from './tax.model';
+import {ProductTaxRelation} from './product-tax-relation.model';
 
 @model({settings: {strict: false}})
 export class Product extends Entity {
@@ -55,6 +57,9 @@ export class Product extends Entity {
 
   @hasMany(() => Category, {through: {model: () => ProductCategoryRelation}})
   categories: Category[];
+
+  @hasMany(() => Tax, {through: {model: () => ProductTaxRelation}})
+  taxes: Tax[];
   // Define well-known properties here
 
   // Indexer property to allow additional data
