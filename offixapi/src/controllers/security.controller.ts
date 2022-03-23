@@ -263,7 +263,7 @@ export class SecurityController {
   })
   async login(
     @requestBody(CredentialsRequestBody) credentials: Credentials,
-  ): Promise<{token: string}> {
+  ): Promise<{token: string, user: User}> {
     // ensure the user exists, and the password is correct
     const user = await this.userService.verifyCredentials(credentials);
 
@@ -273,7 +273,7 @@ export class SecurityController {
     // create a JSON Web Token based on the user profile
     const token = await this.jwtService.generateToken(userProfile);
 
-    return {token};
+    return {token, user};
   }
 
   @post('/api/security/sign-up/bussines', {
