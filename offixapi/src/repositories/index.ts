@@ -11,3 +11,4 @@ export * from './product.repository';
 export * from './product-category-relation.repository';
 export * from './tax.repository';
 export * from './product-tax-relation.repository';
+export * from './address.repository';

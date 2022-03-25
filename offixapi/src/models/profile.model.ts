@@ -1,7 +1,7 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
-import {User} from './user.model';
-import {State} from './state.model';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {City} from './city.model';
+import {State} from './state.model';
+import {User} from './user.model';
 
 @model()
 export class Profile extends Entity {
@@ -10,7 +10,7 @@ export class Profile extends Entity {
     id: true,
     generated: true,
   })
-  id?: string;
+  id: string;
 
   @property({
     type: 'string',
@@ -21,32 +21,28 @@ export class Profile extends Entity {
   @property({
     type: 'string',
   })
-  lastname?: string;
+  lastname: string;
 
   @property({
     type: 'string',
   })
   phone?: string;
 
-  @property({
-    type: 'string',
-  })
-  address?: string;
 
   @property({
     type: 'string',
   })
-  zipcode?: string;
+  zipcode: string;
 
   @property({
     type: 'string',
   })
-  photo?: string;
+  photo: string;
 
   @property({
     type: 'string',
   })
-  ruccode?: string;
+  ruccode: string;
 
   @property({
     type: 'string',
@@ -56,12 +52,12 @@ export class Profile extends Entity {
   @property({
     type: 'string',
   })
-  website?: string;
+  website: string;
 
   @property({
     type: 'string',
   })
-  fax?: string;
+  fax: string;
 
   @belongsTo(() => User)
   userId: string;
