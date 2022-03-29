@@ -24,11 +24,6 @@ export class ProfileController {
   ) { }
 
   @post('/api/profiles')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Profile model instance',
     content: {'application/json': {schema: getModelSchemaRef(Profile)}},
@@ -66,11 +61,6 @@ export class ProfileController {
   }
 
   @get('/api/profiles')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Array of Profile model instances',
     content: {
@@ -89,11 +79,6 @@ export class ProfileController {
   }
 
   @patch('/api/profiles')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Profile PATCH success count',
     content: {'application/json': {schema: CountSchema}},
@@ -113,11 +98,6 @@ export class ProfileController {
   }
 
   @get('/api/profiles/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Profile model instance',
     content: {
@@ -134,11 +114,6 @@ export class ProfileController {
   }
 
   @patch('/api/profiles/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(204, {
     description: 'Profile PATCH success',
   })
@@ -157,11 +132,6 @@ export class ProfileController {
   }
 
   @put('/api/profiles/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(204, {
     description: 'Profile PUT success',
   })

@@ -24,11 +24,6 @@ export class StateController {
   ) { }
 
   @post('/api/states')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'State model instance',
     content: {'application/json': {schema: getModelSchemaRef(State)}},
@@ -50,11 +45,6 @@ export class StateController {
   }
 
   @get('/api/states/count')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'State model count',
     content: {'application/json': {schema: CountSchema}},
@@ -66,11 +56,6 @@ export class StateController {
   }
 
   @get('/api/states')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Array of State model instances',
     content: {
@@ -89,11 +74,6 @@ export class StateController {
   }
 
   @patch('/api/states')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'State PATCH success count',
     content: {'application/json': {schema: CountSchema}},
@@ -113,11 +93,6 @@ export class StateController {
   }
 
   @get('/api/states/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'State model instance',
     content: {
@@ -134,11 +109,6 @@ export class StateController {
   }
 
   @patch('/api/states/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(204, {
     description: 'State PATCH success',
   })
@@ -157,11 +127,6 @@ export class StateController {
   }
 
   @put('/api/states/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(204, {
     description: 'State PUT success',
   })

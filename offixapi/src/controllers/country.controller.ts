@@ -24,11 +24,6 @@ export class CountryController {
   ) { }
 
   @post('/api/countries')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Country model instance',
     content: {'application/json': {schema: getModelSchemaRef(Country)}},
@@ -143,6 +138,11 @@ export class CountryController {
   }
 
   @del('/api/countries/{id}')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin'],
+    voters: [basicAuthorization],
+  })
   @response(204, {
     description: 'Country DELETE success',
   })

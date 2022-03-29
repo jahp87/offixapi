@@ -24,11 +24,6 @@ export class CityController {
   ) { }
 
   @post('/api/cities')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'City model instance',
     content: {'application/json': {schema: getModelSchemaRef(City)}},
@@ -66,11 +61,6 @@ export class CityController {
   }
 
   @get('/api/cities')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Array of City model instances',
     content: {
@@ -89,11 +79,6 @@ export class CityController {
   }
 
   @patch('/api/cities')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'City PATCH success count',
     content: {'application/json': {schema: CountSchema}},
@@ -113,11 +98,6 @@ export class CityController {
   }
 
   @get('/api/cities/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'City model instance',
     content: {
@@ -134,11 +114,6 @@ export class CityController {
   }
 
   @patch('/api/cities/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(204, {
     description: 'City PATCH success',
   })
@@ -157,11 +132,6 @@ export class CityController {
   }
 
   @put('/api/cities/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(204, {
     description: 'City PUT success',
   })
