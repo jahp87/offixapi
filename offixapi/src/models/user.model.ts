@@ -11,15 +11,8 @@ import {UserCredentials} from './user-credentials.model';
         options: {
           unique: true,
         },
-      },
-      uniqueRUT: {
-        keys: {
-          rut: 1,
-        },
-        options: {
-          unique: true,
-        },
-      },
+      }
+
     },
   },
 })
@@ -38,11 +31,6 @@ export class User extends Entity {
   })
   email: string;
 
-  @property({
-    type: 'string',
-    nullable: false,
-  })
-  rut: string;
 
   @property({
     type: 'string',
@@ -55,12 +43,6 @@ export class User extends Entity {
     nullable: false,
   })
   resetKey: string;
-
-  @property({
-    type: 'string',
-    defualt: true
-  })
-  activo: boolean;
 
   @hasOne(() => UserCredentials)
   userCredentials: UserCredentials;

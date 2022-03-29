@@ -1,0 +1,21 @@
+import {Entity, model, property} from '@loopback/repository';
+
+@model()
+export class ResetPasswordInit extends Entity {
+  @property({
+    type: 'string',
+    required: true,
+  })
+  email: string;
+
+
+  constructor(data?: Partial<ResetPasswordInit>) {
+    super(data);
+  }
+}
+
+export interface ResetPasswordInitRelations {
+  // describe navigational properties here
+}
+
+export type ResetPasswordInitWithRelations = ResetPasswordInit & ResetPasswordInitRelations;

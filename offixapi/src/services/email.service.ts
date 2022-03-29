@@ -20,22 +20,13 @@ export class EmailService {
       },
     });
   }
-  async sendResetPasswordMail(user: User): Promise<SMTPTransport.SentMessageInfo> {
+  async sendResetPasswordMail(user: User, htmlTemplate: string): Promise<SMTPTransport.SentMessageInfo> {
     const transporter = await EmailService.setupTransporter();
+
     const emailTemplate = new EmailTemplate({
       to: user.email,
-      subject: '[BATicketera] Reiniciar contraseña',
-      html: `
-      <div>
-          <p>Un saludo</p>
-          <p style="color: red;">Le hemos enviado este correo electrónico para que renicie su contraseña</p>
-          <p>Para reiniciar su contraseña utilise este código</p>
-          <p> Code ${user.resetKey}</p>
-          <p>Si no ha solicitado reiniciar su contraseña, por favor ignore este correo.</p>
-          <p>Gracias</p>
-          <p>Equipo BATicketera</p>
-      </div>
-      `,
+      subject: '[Offix] Reiniciar contraseña',
+      html: htmlTemplate,
     });
     return transporter.sendMail(emailTemplate);
   }
