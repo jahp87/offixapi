@@ -336,7 +336,7 @@ export class SecurityController {
     }
   }
 
-  @post('/users/reset-password/init')
+  @post('/api/security/reset-password/init')
   async resetPasswordInit(
     @requestBody() resetPasswordInit: ResetPasswordInit,
   ): Promise<{email: string}> {
@@ -384,7 +384,7 @@ export class SecurityController {
     );
   }
 
-  @post('/users/reset-password/finish')
+  @post('/api/security/reset-password/finish')
   async resetPasswordFinish(
     @requestBody() keyAndPassword: KeyAndPassword,
   ): Promise<User> {
