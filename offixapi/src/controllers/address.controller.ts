@@ -1,3 +1,5 @@
+import {authenticate} from '@loopback/authentication';
+import {authorize} from '@loopback/authorization';
 import {
   Count,
   CountSchema,
@@ -11,6 +13,7 @@ import {
   getModelSchemaRef, param, patch, post, put, requestBody,
   response
 } from '@loopback/rest';
+import {basicAuthorization} from '../middlewares/auth.midd';
 import {Address} from '../models';
 import {AddressRepository} from '../repositories';
 
@@ -21,6 +24,11 @@ export class AddressController {
   ) { }
 
   @post('/api/addresses')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user'],
+    voters: [basicAuthorization],
+  })
   @response(200, {
     description: 'Address model instance',
     content: {'application/json': {schema: getModelSchemaRef(Address)}},
@@ -42,6 +50,11 @@ export class AddressController {
   }
 
   @get('/api/addresses/count')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user'],
+    voters: [basicAuthorization],
+  })
   @response(200, {
     description: 'Address model count',
     content: {'application/json': {schema: CountSchema}},
@@ -53,6 +66,11 @@ export class AddressController {
   }
 
   @get('/api/addresses')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user'],
+    voters: [basicAuthorization],
+  })
   @response(200, {
     description: 'Array of Address model instances',
     content: {
@@ -71,6 +89,11 @@ export class AddressController {
   }
 
   @patch('/api/addresses')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user'],
+    voters: [basicAuthorization],
+  })
   @response(200, {
     description: 'Address PATCH success count',
     content: {'application/json': {schema: CountSchema}},
@@ -90,6 +113,11 @@ export class AddressController {
   }
 
   @get('/api/addresses/{id}')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user'],
+    voters: [basicAuthorization],
+  })
   @response(200, {
     description: 'Address model instance',
     content: {
@@ -106,6 +134,11 @@ export class AddressController {
   }
 
   @patch('/api/addresses/{id}')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user'],
+    voters: [basicAuthorization],
+  })
   @response(204, {
     description: 'Address PATCH success',
   })
@@ -124,6 +157,11 @@ export class AddressController {
   }
 
   @put('/api/addresses/{id}')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user'],
+    voters: [basicAuthorization],
+  })
   @response(204, {
     description: 'Address PUT success',
   })
@@ -135,6 +173,11 @@ export class AddressController {
   }
 
   @del('/api/addresses/{id}')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user'],
+    voters: [basicAuthorization],
+  })
   @response(204, {
     description: 'Address DELETE success',
   })
