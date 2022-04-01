@@ -1,6 +1,6 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
-import {Country} from './country.model';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {City} from './city.model';
+import {Country} from './country.model';
 import {State} from './state.model';
 import {User} from './user.model';
 
@@ -32,37 +32,36 @@ export class Address extends Entity {
 
   @property({
     type: 'string',
-    required: true,
   })
   street: string;
 
   @property({
     type: 'string',
-    required: true,
+
   })
   apartament: string;
 
   @property({
     type: 'string',
-    required: true,
+
   })
   zip: string;
 
   @property({
     type: 'string',
-    required: true,
+
   })
   email: string;
 
   @property({
     type: 'string',
-    required: true,
+
   })
   phone: string;
 
   @property({
     type: 'string',
-    required: true,
+
   })
   website: string;
 
