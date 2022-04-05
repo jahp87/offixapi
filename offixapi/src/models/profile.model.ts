@@ -13,6 +13,24 @@ export class Profile extends Entity {
   id: string;
 
   @property({
+    type: 'date',
+    required: true,
+  })
+  createdDate: string;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  updatedDate: string;
+
+  @property({
+    type: 'boolean',
+    required: true,
+  })
+  enable: boolean;
+
+  @property({
     type: 'string',
     required: true,
   })
@@ -26,7 +44,7 @@ export class Profile extends Entity {
   @property({
     type: 'string',
   })
-  phone?: string;
+  phone: string;
 
 
   @property({
@@ -47,7 +65,7 @@ export class Profile extends Entity {
   @property({
     type: 'string',
   })
-  clicode?: string;
+  clicode: string;
 
   @property({
     type: 'string',

@@ -1,8 +1,8 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import {Category} from './category.model';
 import {ProductCategoryRelation} from './product-category-relation.model';
-import {Tax} from './tax.model';
 import {ProductTaxRelation} from './product-tax-relation.model';
+import {Tax} from './tax.model';
 
 @model({settings: {strict: false}})
 export class Product extends Entity {
@@ -11,7 +11,25 @@ export class Product extends Entity {
     id: true,
     generated: true,
   })
-  id?: string;
+  id: string;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  createdDate: string;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  updatedDate: string;
+
+  @property({
+    type: 'boolean',
+    required: true,
+  })
+  enable: boolean;
 
   @property({
     type: 'string',
@@ -34,7 +52,7 @@ export class Product extends Entity {
   @property({
     type: 'number',
   })
-  badge?: number;
+  badge: number;
 
   @property({
     type: 'array',

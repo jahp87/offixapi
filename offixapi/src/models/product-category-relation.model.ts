@@ -1,6 +1,6 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
-import {Product} from './product.model';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {Category} from './category.model';
+import {Product} from './product.model';
 
 @model()
 export class ProductCategoryRelation extends Entity {
@@ -9,7 +9,25 @@ export class ProductCategoryRelation extends Entity {
     id: true,
     generated: true,
   })
-  id?: string;
+  id: string;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  createdDate: string;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  updatedDate: string;
+
+  @property({
+    type: 'boolean',
+    required: true,
+  })
+  enable: boolean;
 
   @belongsTo(() => Product)
   productId: string;

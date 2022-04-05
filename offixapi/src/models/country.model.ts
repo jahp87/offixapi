@@ -7,7 +7,25 @@ export class Country extends Entity {
     id: true,
     generated: true,
   })
-  id?: string;
+  id: string;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  createdDate: string;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  updatedDate: string;
+
+  @property({
+    type: 'boolean',
+    required: true,
+  })
+  enable: boolean;
 
   @property({
     type: 'string',

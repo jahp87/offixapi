@@ -13,3 +13,4 @@ export * from './product-category-relation.model';
 export * from './tax.model';
 export * from './product-tax-relation.model';
 export * from './address.model';
+export * from './category-tree.model';
