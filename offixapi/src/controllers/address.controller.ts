@@ -26,7 +26,7 @@ export class AddressController {
   @post('/api/addresses')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin', 'user'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -49,12 +49,6 @@ export class AddressController {
     return this.addressRepository.create(address);
   }
 
-  @get('/api/addresses/count')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'user'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Address model count',
     content: {'application/json': {schema: CountSchema}},
@@ -68,7 +62,7 @@ export class AddressController {
   @get('/api/addresses')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin', 'user'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -91,7 +85,7 @@ export class AddressController {
   @patch('/api/addresses')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin', 'user'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -115,7 +109,7 @@ export class AddressController {
   @get('/api/addresses/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin', 'user'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -136,7 +130,7 @@ export class AddressController {
   @patch('/api/addresses/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin', 'user'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(204, {
@@ -159,7 +153,7 @@ export class AddressController {
   @put('/api/addresses/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin', 'user'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(204, {
@@ -175,7 +169,7 @@ export class AddressController {
   @del('/api/addresses/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin', 'user'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(204, {
