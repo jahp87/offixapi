@@ -20,12 +20,12 @@ export class EmailService {
       },
     });
   }
-  async sendResetPasswordMail(user: User, htmlTemplate: string): Promise<SMTPTransport.SentMessageInfo> {
+  async sendResetPasswordMail(user: User, htmlTemplate: string, subject: string): Promise<SMTPTransport.SentMessageInfo> {
     const transporter = await EmailService.setupTransporter();
 
     const emailTemplate = new EmailTemplate({
       to: user.email,
-      subject: '[Offix] Reiniciar contraseña',
+      subject: subject,
       html: htmlTemplate,
     });
     return transporter.sendMail(emailTemplate);

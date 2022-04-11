@@ -13,4 +13,18 @@ export function renderCode(code: string) {
 
 }
 
+export function renderWelcome(code: string) {
+    return `
+    <p>Un saludo </p>
+    <p style="color: blue;"> Le damos la bienvenida a la Plataforma Offix </p>
+        <p> Por favor de click en el siquiente link para activar su usuario </p>
+            <p>http://localhost:3000/api/security/activate/user/${code}
+</p>
+<p> Si no ha solicitado registrarse, por favor ignore este correo.</p>
+    <p> Gracias </p>
+        <p> Equipo Offix </p>
+            </div>
+    `
+}
+
 

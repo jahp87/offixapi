@@ -44,6 +44,20 @@ export class User extends Entity {
   })
   resetKey: string;
 
+  @property({
+    type: 'string',
+    nullable: false,
+  })
+  enableKey: string;
+
+  @property({
+    type: 'boolean',
+    nullable: false,
+  })
+  activate: boolean;
+
+
+
   @hasOne(() => UserCredentials)
   userCredentials: UserCredentials;
 

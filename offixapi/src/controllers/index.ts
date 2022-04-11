@@ -1,3 +1,8 @@
+export * from './address-city.controller';
+export * from './address-country.controller';
+export * from './address-state.controller';
+export * from './address-user.controller';
+export * from './address.controller';
 export * from './brand.controller';
 export * from './category.controller';
 export * from './city-state.controller';
@@ -19,8 +24,4 @@ export * from './security.controller';
 export * from './state-country.controller';
 export * from './state.controller';
 export * from './tax.controller';
-export * from './address-country.controller';
-export * from './address-city.controller';
-export * from './address-state.controller';
-export * from './address-user.controller';
-export * from './address.controller';
+

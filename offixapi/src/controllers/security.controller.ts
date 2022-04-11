@@ -7,6 +7,7 @@ import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {genSalt, hash} from 'bcryptjs';
 import _ from 'lodash';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import {v4 as uuidv4} from 'uuid';
 import {PasswordHasherBindings, TokenServiceBindings, UserServiceBindings} from '../keys';
 import {basicAuthorization} from '../middlewares/auth.midd';
 import {User} from '../models';
@@ -14,7 +15,7 @@ import {KeyAndPassword} from '../models/key-and-password.model';
 import {ResetPasswordInit} from '../models/reset-password-init.model';
 import {Credentials, UserCredentialsRepository, UserRepository} from '../repositories';
 import {EmailService, PasswordHasher, validateCredentials} from '../services';
-import {renderCode} from '../templates/resetpassword';
+import {renderCode, renderWelcome} from '../templates/htmltemplates';
 const UserProfileSchema = {
   type: 'object',
   required: ['id'],
@@ -141,7 +142,35 @@ export class SecurityController {
         .userCredentials(savedUser.id)
         .create({password});
 
-      return savedUser;
+      // Send an email to the user's email address
+
+      let myuuid = uuidv4();
+      savedUser.enableKey = myuuid;
+      savedUser.activate = false;
+
+      try {
+        // Updates the user to store their reset key with error handling
+        await this.userRepository.updateById(savedUser.id, savedUser);
+      } catch (e) {
+        return e;
+      }
+
+      var htmlWelcome = renderWelcome(savedUser.enableKey);
+
+      const nodeMailer: SMTPTransport.SentMessageInfo = await this.emailService.sendResetPasswordMail(
+        savedUser, htmlWelcome, '[Equipo Offix] Registro de usuario'
+      );
+
+      // Nodemailer has accepted the request. All good
+      if (nodeMailer.accepted.length) {
+        return savedUser;
+      }
+
+      // Nodemailer did not complete the request alert the user
+      throw new HttpErrors.InternalServerError(
+        'Error sending reset password email',
+      );
+
     } catch (error) {
       // MongoError 11000 duplicate key
       if (error.code === 11000 && error.errmsg.includes('index: uniqueEmail')) {
@@ -271,6 +300,10 @@ export class SecurityController {
     // ensure the user exists, and the password is correct
     const user = await this.userService.verifyCredentials(credentials);
 
+    if (!user.activate) {
+      throw new HttpErrors.BadRequest('User not activated');
+    }
+
     // convert a User object into a UserProfile object (reduced set of properties)
     const userProfile = this.userService.convertToUserProfile(user);
 
@@ -370,7 +403,7 @@ export class SecurityController {
     var htmlResetPassword = renderCode(foundUser.resetKey);
 
     const nodeMailer: SMTPTransport.SentMessageInfo = await this.emailService.sendResetPasswordMail(
-      foundUser, htmlResetPassword
+      foundUser, htmlResetPassword, '[Offix] Reiniciar contrasenna'
     );
 
     // Nodemailer has accepted the request. All good
@@ -422,6 +455,49 @@ export class SecurityController {
     }
 
     return foundUser;
+  }
+
+
+  @get('/api/security/activate/user/{key}', {
+    responses: {
+      '200': {
+        description: 'User',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': User,
+            },
+          },
+        },
+      },
+    },
+  })
+  async activateUser(
+    @param.path.string('key') key: string,
+  ): Promise<User> {
+    const foundUser = await this.userRepository.findOne({
+      where: {enableKey: key},
+    });
+
+    // No account found
+    if (!foundUser) {
+      throw new HttpErrors.NotFound(
+        'No account associated with the provided email address.',
+      );
+    }
+
+    foundUser.activate = true;
+
+    try {
+      // Updates the user to store their reset key with error handling
+      await this.userRepository.updateById(foundUser.id, foundUser);
+    } catch (e) {
+      return e;
+    }
+
+    return foundUser;
+
+
   }
 
   async validateKeyPassword(keyAndPassword: KeyAndPassword): Promise<KeyAndPassword> {
