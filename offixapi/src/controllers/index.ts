@@ -25,3 +25,4 @@ export * from './state-country.controller';
 export * from './state.controller';
 export * from './tax.controller';
 
+export * from './contact-email.controller';
