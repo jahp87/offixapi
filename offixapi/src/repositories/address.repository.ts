@@ -1,9 +1,9 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, DefaultCrudRepository, repository} from '@loopback/repository';
 import {OffixdbDataSource} from '../datasources';
-import {Address, AddressRelations, Country, City, State, User} from '../models';
-import {CountryRepository} from './country.repository';
+import {Address, AddressRelations, City, Country, State, User} from '../models';
 import {CityRepository} from './city.repository';
+import {CountryRepository} from './country.repository';
 import {StateRepository} from './state.repository';
 import {UserRepository} from './user.repository';
 
@@ -34,4 +34,29 @@ export class AddressRepository extends DefaultCrudRepository<
     this.country = this.createBelongsToAccessorFor('country', countryRepositoryGetter,);
     this.registerInclusionResolver('country', this.country.inclusionResolver);
   }
+
+  async fulldata(): Promise<Address[]> {
+    return this.find({
+      include: [
+        {relation: 'city'},
+        {relation: 'state'},
+        {relation: 'country'},
+      ]
+    })
+  }
+
+  async fulldataById(id: string): Promise<Address> {
+    return this.findById(
+      id,
+      {
+        include: [
+          {relation: 'city'},
+          {relation: 'state'},
+          {relation: 'country'},
+        ]
+      }
+
+    )
+  }
+
 }

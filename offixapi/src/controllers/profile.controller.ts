@@ -154,4 +154,36 @@ export class ProfileController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.profileRepository.deleteById(id);
   }
+
+  @get('/api/profiles/fulldata')
+  @response(200, {
+    description: 'Array of Profile model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Profile, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async fulldata(
+  ): Promise<Profile[]> {
+    return this.profileRepository.fulldata();
+  }
+
+  @get('/api/profiles/fulldata/{id}')
+  @response(200, {
+    description: 'Profile model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(Profile, {includeRelations: true}),
+      },
+    },
+  })
+  async fulldataId(
+    @param.path.string('id') id: string,
+  ): Promise<Profile> {
+    return this.profileRepository.fulldataId(id);
+  }
 }

@@ -1,10 +1,10 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, DefaultCrudRepository, repository} from '@loopback/repository';
 import {OffixdbDataSource} from '../datasources';
-import {Profile, ProfileRelations, User, State, City} from '../models';
-import {UserRepository} from './user.repository';
-import {StateRepository} from './state.repository';
+import {City, Profile, ProfileRelations, State, User} from '../models';
 import {CityRepository} from './city.repository';
+import {StateRepository} from './state.repository';
+import {UserRepository} from './user.repository';
 
 export class ProfileRepository extends DefaultCrudRepository<
   Profile,
@@ -28,5 +28,46 @@ export class ProfileRepository extends DefaultCrudRepository<
     this.registerInclusionResolver('state', this.state.inclusionResolver);
     this.user = this.createBelongsToAccessorFor('user', userRepositoryGetter,);
     this.registerInclusionResolver('user', this.user.inclusionResolver);
+  }
+
+  async fulldata(): Promise<Profile[]> {
+    return this.find(
+      {
+        include: [
+          {relation: 'city'},
+          {
+            relation: 'state',
+            scope: {
+              include: [
+                {
+                  relation: 'country'
+                }
+              ]
+            }
+          },
+        ]
+      }
+    )
+  }
+
+  async fulldataId(id: string): Promise<Profile> {
+    return this.findById(
+      id,
+      {
+        include: [
+          {relation: 'city'},
+          {
+            relation: 'state',
+            scope: {
+              include: [
+                {
+                  relation: 'country'
+                }
+              ]
+            }
+          },
+        ]
+      }
+    )
   }
 }

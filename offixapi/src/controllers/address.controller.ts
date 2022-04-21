@@ -178,4 +178,46 @@ export class AddressController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.addressRepository.deleteById(id);
   }
+
+  @get('/api/addresses/fulldata')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user', 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'Array of Address model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Address, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async fulldata(
+  ): Promise<Address[]> {
+    return this.addressRepository.find();
+  }
+
+  @get('/api/addresses/fulldata{id}')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user', 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'Address model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(Address, {includeRelations: true}),
+      },
+    },
+  })
+  async fulldataById(
+    @param.path.string('id') id: string,
+  ): Promise<Address> {
+    return this.addressRepository.fulldataById(id);
+  }
 }
