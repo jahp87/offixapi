@@ -201,7 +201,7 @@ export class AddressController {
     return this.addressRepository.find();
   }
 
-  @get('/api/addresses/fulldata{id}')
+  @get('/api/addresses/fulldata/{id}')
   @authenticate('jwt')
   @authorize({
     allowedRoles: ['admin', 'user', 'business'],
