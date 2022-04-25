@@ -198,7 +198,7 @@ export class AddressController {
   })
   async fulldata(
   ): Promise<Address[]> {
-    return this.addressRepository.find();
+    return this.addressRepository.fulldata();
   }
 
   @get('/api/addresses/fulldata/{id}')
