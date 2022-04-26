@@ -184,4 +184,46 @@ export class ProductController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.productRepository.deleteById(id);
   }
+
+  @get('/api/products/fulldata')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'Array of Product model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Product, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async fulldata(
+  ): Promise<Product[]> {
+    return this.productRepository.fulldata();
+  }
+
+  @get('/api/products/fulldata/{id}')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'Product model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(Product, {includeRelations: true}),
+      },
+    },
+  })
+  async fulldataId(
+    @param.path.string('id') id: string,
+  ): Promise<Product> {
+    return this.productRepository.fulldataId(id);
+  }
 }
