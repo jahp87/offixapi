@@ -220,4 +220,24 @@ export class AddressController {
   ): Promise<Address> {
     return this.addressRepository.fulldataById(id);
   }
+
+  @get('/api/addresses/fulldatabyuser/{userId}')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user', 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'Address model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(Address, {includeRelations: true}),
+      },
+    },
+  })
+  async fulldataByUser(
+    @param.path.string('userId') userId: string,
+  ): Promise<Address[]> {
+    return this.addressRepository.fulldataByUser(userId);
+  }
 }

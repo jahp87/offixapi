@@ -59,4 +59,20 @@ export class AddressRepository extends DefaultCrudRepository<
     )
   }
 
+  async fulldataByUser(userId: string): Promise<Address[]> {
+    return this.find(
+      {
+        where: {
+          userId: userId
+        },
+        include: [
+          {relation: 'city'},
+          {relation: 'state'},
+          {relation: 'country'},
+        ]
+      }
+
+    )
+  }
+
 }
