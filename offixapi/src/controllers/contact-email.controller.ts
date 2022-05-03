@@ -1,3 +1,4 @@
+import {inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -8,16 +9,21 @@ import {
 } from '@loopback/repository';
 import {
   del, get,
-  getModelSchemaRef, param, patch, post, put, requestBody,
+  getModelSchemaRef, HttpErrors, param, patch, post, put, requestBody,
   response
 } from '@loopback/rest';
+import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import {ContactEmail} from '../models';
 import {ContactEmailRepository} from '../repositories';
+import {EmailService} from '../services';
+import {renderContact} from '../templates/htmltemplates';
 
 export class ContactEmailController {
   constructor(
     @repository(ContactEmailRepository)
     public contactEmailRepository: ContactEmailRepository,
+    @inject('services.EmailService')
+    public emailService: EmailService,
   ) { }
 
   @post('/api/contactemails')
@@ -141,4 +147,51 @@ export class ContactEmailController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.contactEmailRepository.deleteById(id);
   }
+
+  @post('/api/contactemails/sendemail')
+  @response(200, {
+    description: 'ContactEmail model instance',
+    content: {'application/json': {schema: getModelSchemaRef(ContactEmail)}},
+  })
+  async sendemail(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(ContactEmail, {
+            title: 'NewContactEmail',
+            exclude: ['id'],
+          }),
+        },
+      },
+    })
+    contactEmail: Omit<ContactEmail, 'id'>,
+  ): Promise<ContactEmail | undefined> {
+    let contactEmailObject = await this.contactEmailRepository.create(contactEmail);
+    //send email
+
+    var htmlContactMessage = renderContact(contactEmailObject.name, contactEmailObject.email, contactEmailObject.body);
+
+    const nodeMailer: SMTPTransport.SentMessageInfo = await this.emailService.sendContactMessage(
+      htmlContactMessage
+    );
+
+    try {
+
+      // Nodemailer has accepted the request. All good
+      if (nodeMailer.accepted.length) {
+        return contactEmailObject;
+      }
+
+      // Nodemailer did not complete the request alert the user
+      throw new HttpErrors.InternalServerError(
+        'Error sending contact message',
+      );
+
+    } catch (error) {
+      throw error;
+    }
+
+
+  }
+
 }

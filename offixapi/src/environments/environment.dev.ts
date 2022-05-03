@@ -5,7 +5,7 @@ export const environment = {
   secure: false,
   user: 'churchapp2022@gmail.com',
   pass: 'Usuario123',
-  applicationUrl: 'http://localhost:3000'
+  applicationUrl: 'http://shop.offixcorp.com:3000/'
 
 
 };

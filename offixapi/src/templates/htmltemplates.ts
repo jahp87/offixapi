@@ -28,3 +28,12 @@ export function renderWelcome(code: string) {
 }
 
 
+export function renderContact(name: string, email: string, text: string) {
+    return `
+    <p>Nombre: ${name}</p>
+    <p>Email: ${email}</p>
+    <p>${text}</p>
+    `
+}
+
+

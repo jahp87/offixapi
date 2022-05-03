@@ -1,7 +1,7 @@
 import {bind, BindingScope} from '@loopback/core';
 import {createTransport} from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import {environment} from '../environments/environment';
+import {environment} from '../environments/environment.dev';
 import {EmailTemplate, User} from '../models';
 
 @bind({scope: BindingScope.TRANSIENT})
@@ -26,6 +26,16 @@ export class EmailService {
     const emailTemplate = new EmailTemplate({
       to: user.email,
       subject: subject,
+      html: htmlTemplate,
+    });
+    return transporter.sendMail(emailTemplate);
+  }
+
+  async sendContactMessage(htmlTemplate: string): Promise<SMTPTransport.SentMessageInfo> {
+    const transporter = await EmailService.setupTransporter();
+    const emailTemplate = new EmailTemplate({
+      to: environment.user,
+      subject: 'Correo de contacto',
       html: htmlTemplate,
     });
     return transporter.sendMail(emailTemplate);
