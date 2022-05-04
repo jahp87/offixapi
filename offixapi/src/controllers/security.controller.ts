@@ -358,7 +358,36 @@ export class SecurityController {
         .userCredentials(savedUser.id)
         .create({password});
 
-      return savedUser;
+      // Send an email to the user's email address
+
+      let myuuid = uuidv4();
+      savedUser.enableKey = myuuid;
+      savedUser.activate = false;
+
+      try {
+        // Updates the user to store their reset key with error handling
+        await this.userRepository.updateById(savedUser.id, savedUser);
+      } catch (e) {
+        return e;
+      }
+
+      var htmlWelcome = renderWelcome(savedUser.enableKey);
+
+      const nodeMailer: SMTPTransport.SentMessageInfo = await this.emailService.sendResetPasswordMail(
+        savedUser, htmlWelcome, '[Equipo Offix] Registro de usuario'
+      );
+
+      // Nodemailer has accepted the request. All good
+      if (nodeMailer.accepted.length) {
+        return savedUser;
+      }
+
+      // Nodemailer did not complete the request alert the user
+      throw new HttpErrors.InternalServerError(
+        'Error sending reset password email',
+      );
+
+
     } catch (error) {
       // MongoError 11000 duplicate key
       if (error.code === 11000 && error.errmsg.includes('index: uniqueEmail')) {
