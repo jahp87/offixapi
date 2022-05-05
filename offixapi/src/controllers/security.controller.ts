@@ -8,6 +8,7 @@ import {genSalt, hash} from 'bcryptjs';
 import _ from 'lodash';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import {v4 as uuidv4} from 'uuid';
+import {environment} from '../environments/environment.prod';
 import {PasswordHasherBindings, TokenServiceBindings, UserServiceBindings} from '../keys';
 import {basicAuthorization} from '../middlewares/auth.midd';
 import {User} from '../models';
@@ -155,7 +156,7 @@ export class SecurityController {
         return e;
       }
 
-      var htmlWelcome = renderWelcome(savedUser.enableKey);
+      var htmlWelcome = renderWelcome(savedUser.enableKey, environment.serverUrl);
 
       const nodeMailer: SMTPTransport.SentMessageInfo = await this.emailService.sendResetPasswordMail(
         savedUser, htmlWelcome, '[Equipo Offix] Registro de usuario'
@@ -313,7 +314,7 @@ export class SecurityController {
     return {token, user};
   }
 
-  @post('/api/security/sign-up/bussines', {
+  @post('/api/security/sign-up/business', {
     responses: {
       '200': {
         description: 'User',
@@ -330,7 +331,7 @@ export class SecurityController {
   async createbussines(
     @requestBody(CredentialsRequestBody) newUserRequest: Credentials,
   ): Promise<User> {
-    newUserRequest.role = 'bussines';
+    newUserRequest.role = 'business';
 
     // ensure a valid email value and password value
     validateCredentials(_.pick(newUserRequest, ['email', 'password']));
@@ -371,7 +372,7 @@ export class SecurityController {
         return e;
       }
 
-      var htmlWelcome = renderWelcome(savedUser.enableKey);
+      var htmlWelcome = renderWelcome(savedUser.enableKey, environment.applicationUrl);
 
       const nodeMailer: SMTPTransport.SentMessageInfo = await this.emailService.sendResetPasswordMail(
         savedUser, htmlWelcome, '[Equipo Offix] Registro de usuario'
