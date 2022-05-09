@@ -77,6 +77,17 @@ export class Profile extends Entity {
   })
   fax: string;
 
+  @property({
+    type: 'string',
+  })
+  bankaccountmn: string;
+
+  @property({
+    type: 'string',
+  })
+  bankaccountmlc: string;
+
+
   @belongsTo(() => User)
   userId: string;
 
