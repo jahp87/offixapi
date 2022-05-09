@@ -1,4 +1,4 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {TypeService} from './type-service.model';
 import {User} from './user.model';
 
@@ -16,6 +16,12 @@ export class Service extends Entity {
     required: true,
   })
   name: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  image: string;
 
   @property({
     type: 'string',

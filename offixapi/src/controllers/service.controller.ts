@@ -228,24 +228,5 @@ export class ServiceController {
     return this.serviceRepository.fulldataById(id);
   }
 
-  @get('/api/services/fulldatabyuser/{userId}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'user', 'business'],
-    voters: [basicAuthorization],
-  })
-  @response(200, {
-    description: 'Service model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(Service, {includeRelations: true}),
-      },
-    },
-  })
-  async fulldataByUser(
-    @param.path.string('userId') userId: string,
 
-  ): Promise<Service[]> {
-    return this.serviceRepository.fulldataByUser(userId);
-  }
 }

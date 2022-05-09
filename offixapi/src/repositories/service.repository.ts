@@ -56,21 +56,5 @@ export class ServiceRepository extends DefaultCrudRepository<
     )
   }
 
-  async fulldataByUser(userId: string): Promise<Service[]> {
-    return this.find(
-      {
-        where: {
-          userId: userId
-        },
-        include: [
-          {
-            relation: 'typeService'
-          },
-          {
-            relation: 'user'
-          }
-        ]
-      }
-    )
-  }
+
 }
