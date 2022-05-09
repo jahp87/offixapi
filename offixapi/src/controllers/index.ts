@@ -30,3 +30,5 @@ export * from './type-service.controller';
 export * from './service-type-service.controller';
 export * from './service.controller';
 export * from './service-user.controller';
+export * from './model-brand.controller';
+export * from './model.controller';

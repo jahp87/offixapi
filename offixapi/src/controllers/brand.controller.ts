@@ -26,7 +26,7 @@ export class BrandController {
   @post('/api/brands')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -52,7 +52,7 @@ export class BrandController {
   @get('/api/brands/count')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -68,7 +68,7 @@ export class BrandController {
   @get('/api/brands')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -91,7 +91,7 @@ export class BrandController {
   @patch('/api/brands')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -115,7 +115,7 @@ export class BrandController {
   @get('/api/brands/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -136,7 +136,7 @@ export class BrandController {
   @patch('/api/brands/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(204, {
@@ -159,7 +159,7 @@ export class BrandController {
   @put('/api/brands/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(204, {
@@ -175,7 +175,7 @@ export class BrandController {
   @del('/api/brands/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(204, {
