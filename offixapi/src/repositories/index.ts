@@ -16,3 +16,4 @@ export * from './contact-email.repository';
 export * from './type-service.repository';
 export * from './service.repository';
 export * from './model.repository';
+export * from './device.repository';

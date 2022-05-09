@@ -18,3 +18,4 @@ export * from './contact-email.model';
 export * from './type-service.model';
 export * from './service.model';
 export * from './model.model';
+export * from './device.model';

@@ -32,3 +32,5 @@ export * from './service.controller';
 export * from './service-user.controller';
 export * from './model-brand.controller';
 export * from './model.controller';
+export * from './device-model.controller';
+export * from './device.controller';
