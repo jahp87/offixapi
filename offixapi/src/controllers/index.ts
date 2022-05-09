@@ -27,3 +27,6 @@ export * from './tax.controller';
 
 export * from './contact-email.controller';
 export * from './type-service.controller';
+export * from './service-type-service.controller';
+export * from './service.controller';
+export * from './service-user.controller';

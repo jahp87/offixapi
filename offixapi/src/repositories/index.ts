@@ -14,3 +14,4 @@ export * from './product-tax-relation.repository';
 export * from './address.repository';
 export * from './contact-email.repository';
 export * from './type-service.repository';
+export * from './service.repository';
