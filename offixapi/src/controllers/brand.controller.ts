@@ -184,4 +184,47 @@ export class BrandController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.brandRepository.deleteById(id);
   }
+
+  @get('/api/brands/fulldata')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user', 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'Array of Brand model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Brand, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async fulldata(
+  ): Promise<Brand[]> {
+    return this.brandRepository.fulldata();
+  }
+
+  @get('/api/brands/fulldata/{id}')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user', 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'Brand model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(Brand, {includeRelations: true}),
+      },
+    },
+  })
+  async fulldataById(
+    @param.path.string('id') id: string,
+  ): Promise<Brand> {
+    return this.brandRepository.fulldataById(id);
+  }
+
 }

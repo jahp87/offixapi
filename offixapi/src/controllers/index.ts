@@ -35,3 +35,5 @@ export * from './tax.controller';
 export * from './type-service.controller';
 export * from './order-service-device.controller';
 export * from './order-service.controller';
+export * from './brand-model.controller';
+export * from './model-device.controller';

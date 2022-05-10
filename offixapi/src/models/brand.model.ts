@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Model} from './model.model';
 
 @model()
 export class Brand extends Entity {
@@ -39,6 +40,8 @@ export class Brand extends Entity {
   })
   image?: string;
 
+  @hasMany(() => Model)
+  models: Model[];
 
   constructor(data?: Partial<Brand>) {
     super(data);
