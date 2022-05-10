@@ -18,10 +18,10 @@ export class OrderService extends Entity {
   fecha: string;
 
   @property({
-    type: 'boolean',
+    type: 'string',
     required: true,
   })
-  failed: boolean;
+  failure: string;
 
   @property({
     type: 'boolean',

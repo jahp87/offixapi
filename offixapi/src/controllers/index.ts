@@ -37,3 +37,6 @@ export * from './order-service-device.controller';
 export * from './order-service.controller';
 export * from './brand-model.controller';
 export * from './model-device.controller';
+export * from './reset-device.controller';
+export * from './reset-user.controller';
+export * from './reset.controller';
