@@ -19,3 +19,4 @@ export * from './type-service.model';
 export * from './service.model';
 export * from './model.model';
 export * from './device.model';
+export * from './order-service.model';
