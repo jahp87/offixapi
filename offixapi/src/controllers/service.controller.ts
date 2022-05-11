@@ -202,6 +202,7 @@ export class ServiceController {
       },
     },
   })
+
   async fulldata(
   ): Promise<Service[]> {
     return this.serviceRepository.fulldata();
