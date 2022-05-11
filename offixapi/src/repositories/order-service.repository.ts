@@ -1,8 +1,10 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, DefaultCrudRepository, repository} from '@loopback/repository';
 import {OffixdbDataSource} from '../datasources';
-import {Device, OrderService, OrderServiceRelations, User} from '../models';
+import {Device, OrderService, OrderServiceRelations, OrderServiceStatus, Service, User} from '../models';
 import {DeviceRepository} from './device.repository';
+import {OrderServiceStatusRepository} from './order-service-status.repository';
+import {ServiceRepository} from './service.repository';
 import {UserRepository} from './user.repository';
 
 export class OrderServiceRepository extends DefaultCrudRepository<
@@ -11,22 +13,30 @@ export class OrderServiceRepository extends DefaultCrudRepository<
   OrderServiceRelations
 > {
 
-  public readonly consumer: BelongsToAccessor<User, typeof OrderService.prototype.id>;
+  public readonly customer: BelongsToAccessor<User, typeof OrderService.prototype.id>;
 
   public readonly business: BelongsToAccessor<User, typeof OrderService.prototype.id>;
 
   public readonly device: BelongsToAccessor<Device, typeof OrderService.prototype.id>;
 
+  public readonly service: BelongsToAccessor<Service, typeof OrderService.prototype.id>;
+
+  public readonly orderServiceStatus: BelongsToAccessor<OrderServiceStatus, typeof OrderService.prototype.id>;
+
   constructor(
-    @inject('datasources.offixdb') dataSource: OffixdbDataSource, @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>, @repository.getter('DeviceRepository') protected deviceRepositoryGetter: Getter<DeviceRepository>,
+    @inject('datasources.offixdb') dataSource: OffixdbDataSource, @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>, @repository.getter('DeviceRepository') protected deviceRepositoryGetter: Getter<DeviceRepository>, @repository.getter('ServiceRepository') protected serviceRepositoryGetter: Getter<ServiceRepository>, @repository.getter('OrderServiceStatusRepository') protected orderServiceStatusRepositoryGetter: Getter<OrderServiceStatusRepository>,
   ) {
     super(OrderService, dataSource);
+    this.orderServiceStatus = this.createBelongsToAccessorFor('orderServiceStatus', orderServiceStatusRepositoryGetter,);
+    this.registerInclusionResolver('orderServiceStatus', this.orderServiceStatus.inclusionResolver);
+    this.service = this.createBelongsToAccessorFor('service', serviceRepositoryGetter,);
+    this.registerInclusionResolver('service', this.service.inclusionResolver);
     this.device = this.createBelongsToAccessorFor('device', deviceRepositoryGetter,);
     this.registerInclusionResolver('device', this.device.inclusionResolver);
     this.business = this.createBelongsToAccessorFor('business', userRepositoryGetter,);
     this.registerInclusionResolver('business', this.business.inclusionResolver);
-    this.consumer = this.createBelongsToAccessorFor('consumer', userRepositoryGetter,);
-    this.registerInclusionResolver('consumer', this.consumer.inclusionResolver);
+    this.customer = this.createBelongsToAccessorFor('customer', userRepositoryGetter,);
+    this.registerInclusionResolver('customer', this.customer.inclusionResolver);
   }
 
   async fulldata(): Promise<OrderService[]> {
@@ -36,7 +46,17 @@ export class OrderServiceRepository extends DefaultCrudRepository<
           relation: 'business'
         },
         {
-          relation: 'consumer'
+          relation: 'customer'
+        },
+        {
+          relation: 'service',
+          scope: {
+            include: [
+              {
+                relation: 'typeService'
+              }
+            ]
+          }
         },
         {
           relation: 'device',
@@ -54,6 +74,9 @@ export class OrderServiceRepository extends DefaultCrudRepository<
               }
             ]
           }
+        },
+        {
+          relation: 'orderServiceStatus'
         }
       ]
     });
@@ -68,7 +91,17 @@ export class OrderServiceRepository extends DefaultCrudRepository<
             relation: 'business'
           },
           {
-            relation: 'consumer'
+            relation: 'customer'
+          },
+          {
+            relation: 'service',
+            scope: {
+              include: [
+                {
+                  relation: 'typeService'
+                }
+              ]
+            }
           },
           {
             relation: 'device',

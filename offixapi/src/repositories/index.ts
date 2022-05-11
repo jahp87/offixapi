@@ -19,3 +19,4 @@ export * from './user.repository';
 
 export * from './order-service.repository';
 export * from './reset.repository';
+export * from './order-service-status.repository';

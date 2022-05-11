@@ -21,3 +21,4 @@ export * from './model.model';
 export * from './device.model';
 export * from './order-service.model';
 export * from './reset.model';
+export * from './order-service-status.model';

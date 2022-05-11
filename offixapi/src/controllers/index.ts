@@ -40,3 +40,6 @@ export * from './model-device.controller';
 export * from './reset-device.controller';
 export * from './reset-user.controller';
 export * from './reset.controller';
+export * from './order-service-service.controller';
+export * from './order-service-order-service-status.controller';
+export * from './order-service-status.controller';
