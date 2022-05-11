@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Service} from './service.model';
 
 @model()
 export class TypeService extends Entity {
@@ -33,6 +34,8 @@ export class TypeService extends Entity {
   })
   enable: boolean;
 
+  @hasMany(() => Service)
+  services: Service[];
 
   constructor(data?: Partial<TypeService>) {
     super(data);

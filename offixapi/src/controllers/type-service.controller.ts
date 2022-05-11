@@ -184,4 +184,46 @@ export class TypeServiceController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.typeServiceRepository.deleteById(id);
   }
+
+  @get('/api/typeservices/fulldata')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user', 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'Array of TypeService model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(TypeService, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async fulldata(
+  ): Promise<TypeService[]> {
+    return this.typeServiceRepository.fulldata();
+  }
+
+  @get('/api/typeservices/fulldata/{id}')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user', 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'TypeService model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(TypeService, {includeRelations: true}),
+      },
+    },
+  })
+  async fulldataById(
+    @param.path.string('id') id: string
+  ): Promise<TypeService> {
+    return this.typeServiceRepository.fulldataById(id);
+  }
 }
