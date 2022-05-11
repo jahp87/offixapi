@@ -18,7 +18,7 @@ export function renderWelcome(code: string, serverUrl: string) {
     <p>Un saludo </p>
     <p style="color: blue;"> Le damos la bienvenida a la Plataforma Offix </p>
         <p> Por favor de click en el siquiente link para activar su usuario </p>
-            <p>http://${serverUrl}/activate/user//${code}
+            <p>http://${serverUrl}/activate/user/${code}
 </p>
 <p> Si no ha solicitado registrarse, por favor ignore este correo.</p>
     <p> Gracias </p>
