@@ -2,7 +2,6 @@ import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {Device} from './device.model';
 import {Service} from './service.model';
 import {User} from './user.model';
-import {OrderServiceStatus} from './order-service-status.model';
 
 @model()
 export class OrderService extends Entity {
@@ -11,7 +10,7 @@ export class OrderService extends Entity {
     id: true,
     generated: true,
   })
-  id?: string;
+  id: string;
 
   @property({
     type: 'date',
@@ -24,6 +23,12 @@ export class OrderService extends Entity {
     required: true,
   })
   failure: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  status: string;
 
   @property({
     type: 'boolean',
@@ -61,8 +66,7 @@ export class OrderService extends Entity {
   @belongsTo(() => Service)
   serviceId: string;
 
-  @belongsTo(() => OrderServiceStatus)
-  orderServiceStatusId: string;
+
 
   constructor(data?: Partial<OrderService>) {
     super(data);

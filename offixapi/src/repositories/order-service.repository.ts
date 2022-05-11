@@ -1,9 +1,8 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, DefaultCrudRepository, repository} from '@loopback/repository';
 import {OffixdbDataSource} from '../datasources';
-import {Device, OrderService, OrderServiceRelations, OrderServiceStatus, Service, User} from '../models';
+import {Device, OrderService, OrderServiceRelations, Service, User} from '../models';
 import {DeviceRepository} from './device.repository';
-import {OrderServiceStatusRepository} from './order-service-status.repository';
 import {ServiceRepository} from './service.repository';
 import {UserRepository} from './user.repository';
 
@@ -21,14 +20,15 @@ export class OrderServiceRepository extends DefaultCrudRepository<
 
   public readonly service: BelongsToAccessor<Service, typeof OrderService.prototype.id>;
 
-  public readonly orderServiceStatus: BelongsToAccessor<OrderServiceStatus, typeof OrderService.prototype.id>;
+
 
   constructor(
-    @inject('datasources.offixdb') dataSource: OffixdbDataSource, @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>, @repository.getter('DeviceRepository') protected deviceRepositoryGetter: Getter<DeviceRepository>, @repository.getter('ServiceRepository') protected serviceRepositoryGetter: Getter<ServiceRepository>, @repository.getter('OrderServiceStatusRepository') protected orderServiceStatusRepositoryGetter: Getter<OrderServiceStatusRepository>,
+    @inject('datasources.offixdb') dataSource: OffixdbDataSource,
+    @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>,
+    @repository.getter('DeviceRepository') protected deviceRepositoryGetter: Getter<DeviceRepository>,
+    @repository.getter('ServiceRepository') protected serviceRepositoryGetter: Getter<ServiceRepository>,
   ) {
     super(OrderService, dataSource);
-    this.orderServiceStatus = this.createBelongsToAccessorFor('orderServiceStatus', orderServiceStatusRepositoryGetter,);
-    this.registerInclusionResolver('orderServiceStatus', this.orderServiceStatus.inclusionResolver);
     this.service = this.createBelongsToAccessorFor('service', serviceRepositoryGetter,);
     this.registerInclusionResolver('service', this.service.inclusionResolver);
     this.device = this.createBelongsToAccessorFor('device', deviceRepositoryGetter,);
@@ -74,9 +74,6 @@ export class OrderServiceRepository extends DefaultCrudRepository<
               }
             ]
           }
-        },
-        {
-          relation: 'orderServiceStatus'
         }
       ]
     });
