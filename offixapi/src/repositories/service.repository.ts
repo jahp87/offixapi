@@ -1,9 +1,8 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, DefaultCrudRepository, repository} from '@loopback/repository';
 import {OffixdbDataSource} from '../datasources';
-import {Service, ServiceRelations, TypeService, User} from '../models';
+import {Service, ServiceRelations, TypeService} from '../models';
 import {TypeServiceRepository} from './type-service.repository';
-import {UserRepository} from './user.repository';
 
 export class ServiceRepository extends DefaultCrudRepository<
   Service,
@@ -13,14 +12,11 @@ export class ServiceRepository extends DefaultCrudRepository<
 
   public readonly typeService: BelongsToAccessor<TypeService, typeof Service.prototype.id>;
 
-  public readonly user: BelongsToAccessor<User, typeof Service.prototype.id>;
 
   constructor(
-    @inject('datasources.offixdb') dataSource: OffixdbDataSource, @repository.getter('TypeServiceRepository') protected typeServiceRepositoryGetter: Getter<TypeServiceRepository>, @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>,
+    @inject('datasources.offixdb') dataSource: OffixdbDataSource, @repository.getter('TypeServiceRepository') protected typeServiceRepositoryGetter: Getter<TypeServiceRepository>
   ) {
     super(Service, dataSource);
-    this.user = this.createBelongsToAccessorFor('user', userRepositoryGetter,);
-    this.registerInclusionResolver('user', this.user.inclusionResolver);
     this.typeService = this.createBelongsToAccessorFor('typeService', typeServiceRepositoryGetter,);
     this.registerInclusionResolver('typeService', this.typeService.inclusionResolver);
   }
@@ -31,9 +27,6 @@ export class ServiceRepository extends DefaultCrudRepository<
         include: [
           {
             relation: 'typeService'
-          },
-          {
-            relation: 'user'
           }
         ]
       }
@@ -47,9 +40,6 @@ export class ServiceRepository extends DefaultCrudRepository<
         include: [
           {
             relation: 'typeService'
-          },
-          {
-            relation: 'user'
           }
         ]
       }
