@@ -1,6 +1,5 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {Device} from './device.model';
-import {User} from './user.model';
 
 @model({settings: {strict: false}})
 export class Reset extends Entity {
@@ -38,8 +37,6 @@ export class Reset extends Entity {
   @belongsTo(() => Device)
   deviceId: string;
 
-  @belongsTo(() => User)
-  ownerId: string;
   // Define well-known properties here
 
   // Indexer property to allow additional data
