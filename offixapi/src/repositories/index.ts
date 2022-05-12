@@ -2,10 +2,11 @@ export * from './address.repository';
 export * from './brand.repository';
 export * from './category.repository';
 export * from './city.repository';
+export * from './config-slide.repository';
 export * from './contact-email.repository';
 export * from './country.repository';
 export * from './device.repository';
-export * from './model.repository';
+export * from './order-reset.repository';
 export * from './order-service.repository';
 export * from './product-category-relation.repository';
 export * from './product-tax-relation.repository';
@@ -20,5 +21,4 @@ export * from './user-credentials.repository';
 export * from './user.repository';
 
 
-export * from './order-reset.repository';
-export * from './config-slide.repository';
+

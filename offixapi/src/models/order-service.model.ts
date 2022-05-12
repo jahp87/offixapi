@@ -1,6 +1,8 @@
 import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {Service} from './service.model';
 import {User} from './user.model';
+import {Brand} from './brand.model';
+import {Device} from './device.model';
 
 @model()
 export class OrderService extends Entity {
@@ -28,6 +30,19 @@ export class OrderService extends Entity {
     required: true,
   })
   status: string;
+
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  model: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  address: string;
 
   @property({
     type: 'boolean',
@@ -62,7 +77,11 @@ export class OrderService extends Entity {
   @belongsTo(() => Service)
   serviceId: string;
 
+  @belongsTo(() => Brand)
+  brandId: string;
 
+  @belongsTo(() => Device)
+  deviceId: string;
 
   constructor(data?: Partial<OrderService>) {
     super(data);

@@ -1,8 +1,8 @@
-import {Getter, inject} from '@loopback/core';
-import {DefaultCrudRepository, HasManyRepositoryFactory, repository} from '@loopback/repository';
+import {inject} from '@loopback/core';
+import {DefaultCrudRepository} from '@loopback/repository';
 import {OffixdbDataSource} from '../datasources';
-import {Brand, BrandRelations, Model} from '../models';
-import {ModelRepository} from './model.repository';
+import {Brand, BrandRelations} from '../models';
+
 
 export class BrandRepository extends DefaultCrudRepository<
   Brand,
@@ -10,30 +10,19 @@ export class BrandRepository extends DefaultCrudRepository<
   BrandRelations
 > {
 
-  public readonly models: HasManyRepositoryFactory<Model, typeof Brand.prototype.id>;
+
 
   constructor(
-    @inject('datasources.offixdb') dataSource: OffixdbDataSource, @repository.getter('ModelRepository') protected modelRepositoryGetter: Getter<ModelRepository>,
+    @inject('datasources.offixdb') dataSource: OffixdbDataSource,
+
   ) {
     super(Brand, dataSource);
-    this.models = this.createHasManyRepositoryFactoryFor('models', modelRepositoryGetter,);
-    this.registerInclusionResolver('models', this.models.inclusionResolver);
+
   }
 
   async fulldata(): Promise<Brand[]> {
     return this.find({
-      include: [
-        {
-          relation: 'models',
-          scope: {
-            include: [
-              {
-                relation: 'devices'
-              }
-            ]
-          }
-        }
-      ]
+
     })
   }
 
@@ -41,18 +30,7 @@ export class BrandRepository extends DefaultCrudRepository<
     return this.findById(
       id,
       {
-        include: [
-          {
-            relation: 'models',
-            scope: {
-              include: [
-                {
-                  relation: 'devices'
-                }
-              ]
-            }
-          }
-        ]
+
       }
     )
   }

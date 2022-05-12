@@ -1,5 +1,4 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
-import {Model} from './model.model';
+import {Entity, model, property} from '@loopback/repository';
 
 @model()
 export class Device extends Entity {
@@ -34,8 +33,6 @@ export class Device extends Entity {
   })
   enable: boolean;
 
-  @belongsTo(() => Model)
-  modelId: string;
 
   constructor(data?: Partial<Device>) {
     super(data);

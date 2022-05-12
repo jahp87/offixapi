@@ -1,9 +1,11 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, DefaultCrudRepository, repository} from '@loopback/repository';
 import {OffixdbDataSource} from '../datasources';
-import {OrderService, OrderServiceRelations, Service, User} from '../models';
+import {OrderService, OrderServiceRelations, Service, User, Brand, Device} from '../models';
 import {ServiceRepository} from './service.repository';
 import {UserRepository} from './user.repository';
+import {BrandRepository} from './brand.repository';
+import {DeviceRepository} from './device.repository';
 
 export class OrderServiceRepository extends DefaultCrudRepository<
   OrderService,
@@ -17,14 +19,20 @@ export class OrderServiceRepository extends DefaultCrudRepository<
 
   public readonly service: BelongsToAccessor<Service, typeof OrderService.prototype.id>;
 
+  public readonly brand: BelongsToAccessor<Brand, typeof OrderService.prototype.id>;
 
+  public readonly device: BelongsToAccessor<Device, typeof OrderService.prototype.id>;
 
   constructor(
     @inject('datasources.offixdb') dataSource: OffixdbDataSource,
     @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>,
-    @repository.getter('ServiceRepository') protected serviceRepositoryGetter: Getter<ServiceRepository>,
+    @repository.getter('ServiceRepository') protected serviceRepositoryGetter: Getter<ServiceRepository>, @repository.getter('BrandRepository') protected brandRepositoryGetter: Getter<BrandRepository>, @repository.getter('DeviceRepository') protected deviceRepositoryGetter: Getter<DeviceRepository>,
   ) {
     super(OrderService, dataSource);
+    this.device = this.createBelongsToAccessorFor('device', deviceRepositoryGetter,);
+    this.registerInclusionResolver('device', this.device.inclusionResolver);
+    this.brand = this.createBelongsToAccessorFor('brand', brandRepositoryGetter,);
+    this.registerInclusionResolver('brand', this.brand.inclusionResolver);
     this.service = this.createBelongsToAccessorFor('service', serviceRepositoryGetter,);
     this.registerInclusionResolver('service', this.service.inclusionResolver);
     this.business = this.createBelongsToAccessorFor('business', userRepositoryGetter,);
