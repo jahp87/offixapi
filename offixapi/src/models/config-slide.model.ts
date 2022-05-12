@@ -1,9 +1,7 @@
-import {belongsTo, Entity, model, property} from '@loopback/repository';
-import {Reset} from './reset.model';
-import {User} from './user.model';
+import {Entity, model, property} from '@loopback/repository';
 
 @model()
-export class OrderReset extends Entity {
+export class ConfigSlide extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -12,28 +10,40 @@ export class OrderReset extends Entity {
   id: string;
 
   @property({
-    type: 'date',
+    type: 'string',
     required: true,
   })
-  date: string;
+  title: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  note: string;
-
-  @property({
-    type: 'boolean',
-    required: true,
-  })
-  houseservice: boolean;
+  text: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  status: string;
+  imageClassic: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  imageFull: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  imageMobile: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  page: string;
 
   @property({
     type: 'date',
@@ -53,22 +63,14 @@ export class OrderReset extends Entity {
   })
   enable: boolean;
 
-  @belongsTo(() => User)
-  customerId: string;
 
-  @belongsTo(() => User)
-  businessId: string;
-
-  @belongsTo(() => Reset)
-  resetId: string;
-
-  constructor(data?: Partial<OrderReset>) {
+  constructor(data?: Partial<ConfigSlide>) {
     super(data);
   }
 }
 
-export interface OrderResetRelations {
+export interface ConfigSlideRelations {
   // describe navigational properties here
 }
 
-export type OrderResetWithRelations = OrderReset & OrderResetRelations;
+export type ConfigSlideWithRelations = ConfigSlide & ConfigSlideRelations;

@@ -43,3 +43,4 @@ export * from './tax.controller';
 export * from './type-service-service.controller';
 export * from './type-service.controller';
 
+export * from './config-slide.controller';

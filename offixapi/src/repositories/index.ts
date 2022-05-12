@@ -21,3 +21,4 @@ export * from './user.repository';
 
 
 export * from './order-reset.repository';
+export * from './config-slide.repository';
