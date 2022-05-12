@@ -66,11 +66,6 @@ export class ServiceController {
   }
 
   @get('/api/services')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'user', 'business'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Array of Service model instances',
     content: {
@@ -186,11 +181,6 @@ export class ServiceController {
   }
 
   @get('/api/services/fulldata')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'user', 'business'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Array of Service model instances',
     content: {
@@ -209,11 +199,6 @@ export class ServiceController {
   }
 
   @get('/api/services/fulldata/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'user', 'business'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Service model instance',
     content: {
