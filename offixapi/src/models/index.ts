@@ -23,3 +23,4 @@ export * from './user.model';
 
 
 export * from './order-reset.model';
+export * from './config-slide.model';
