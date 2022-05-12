@@ -9,20 +9,20 @@ import {
 } from '@loopback/rest';
 import {basicAuthorization} from '../middlewares/auth.midd';
 import {
-  Device, OrderService
+  Device, Service
 } from '../models';
-import {OrderServiceRepository} from '../repositories';
+import {ServiceRepository} from '../repositories';
 
-export class OrderServiceDeviceController {
+export class ServiceDeviceController {
   constructor(
-    @repository(OrderServiceRepository)
-    public orderServiceRepository: OrderServiceRepository,
+    @repository(ServiceRepository)
+    public serviceRepository: ServiceRepository,
   ) { }
 
-  @get('/api/orderservices/{id}/device', {
+  @get('/api/services/{id}/device', {
     responses: {
       '200': {
-        description: 'Device belonging to OrderService',
+        description: 'Device belonging to Service',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(Device)},
@@ -37,8 +37,8 @@ export class OrderServiceDeviceController {
     voters: [basicAuthorization],
   })
   async getDevice(
-    @param.path.string('id') id: typeof OrderService.prototype.id,
+    @param.path.string('id') id: typeof Service.prototype.id,
   ): Promise<Device> {
-    return this.orderServiceRepository.device(id);
+    return this.serviceRepository.device(id);
   }
 }

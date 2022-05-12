@@ -1,8 +1,7 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, DefaultCrudRepository, repository} from '@loopback/repository';
 import {OffixdbDataSource} from '../datasources';
-import {Device, OrderService, OrderServiceRelations, Service, User} from '../models';
-import {DeviceRepository} from './device.repository';
+import {OrderService, OrderServiceRelations, Service, User} from '../models';
 import {ServiceRepository} from './service.repository';
 import {UserRepository} from './user.repository';
 
@@ -16,8 +15,6 @@ export class OrderServiceRepository extends DefaultCrudRepository<
 
   public readonly business: BelongsToAccessor<User, typeof OrderService.prototype.id>;
 
-  public readonly device: BelongsToAccessor<Device, typeof OrderService.prototype.id>;
-
   public readonly service: BelongsToAccessor<Service, typeof OrderService.prototype.id>;
 
 
@@ -25,14 +22,11 @@ export class OrderServiceRepository extends DefaultCrudRepository<
   constructor(
     @inject('datasources.offixdb') dataSource: OffixdbDataSource,
     @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>,
-    @repository.getter('DeviceRepository') protected deviceRepositoryGetter: Getter<DeviceRepository>,
     @repository.getter('ServiceRepository') protected serviceRepositoryGetter: Getter<ServiceRepository>,
   ) {
     super(OrderService, dataSource);
     this.service = this.createBelongsToAccessorFor('service', serviceRepositoryGetter,);
     this.registerInclusionResolver('service', this.service.inclusionResolver);
-    this.device = this.createBelongsToAccessorFor('device', deviceRepositoryGetter,);
-    this.registerInclusionResolver('device', this.device.inclusionResolver);
     this.business = this.createBelongsToAccessorFor('business', userRepositoryGetter,);
     this.registerInclusionResolver('business', this.business.inclusionResolver);
     this.customer = this.createBelongsToAccessorFor('customer', userRepositoryGetter,);
@@ -54,23 +48,6 @@ export class OrderServiceRepository extends DefaultCrudRepository<
             include: [
               {
                 relation: 'typeService'
-              }
-            ]
-          }
-        },
-        {
-          relation: 'device',
-          scope: {
-            include: [
-              {
-                relation: 'model',
-                scope: {
-                  include: [
-                    {
-                      relation: 'brand'
-                    }
-                  ]
-                }
               }
             ]
           }
@@ -96,23 +73,6 @@ export class OrderServiceRepository extends DefaultCrudRepository<
               include: [
                 {
                   relation: 'typeService'
-                }
-              ]
-            }
-          },
-          {
-            relation: 'device',
-            scope: {
-              include: [
-                {
-                  relation: 'model',
-                  scope: {
-                    include: [
-                      {
-                        relation: 'brand'
-                      }
-                    ]
-                  }
                 }
               ]
             }

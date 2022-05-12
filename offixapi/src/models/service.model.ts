@@ -1,5 +1,6 @@
 import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {TypeService} from './type-service.model';
+import {Device} from './device.model';
 
 @model()
 export class Service extends Entity {
@@ -48,6 +49,9 @@ export class Service extends Entity {
 
   @belongsTo(() => TypeService)
   typeServiceId: string;
+
+  @belongsTo(() => Device)
+  deviceId: string;
 
   constructor(data?: Partial<Service>) {
     super(data);
