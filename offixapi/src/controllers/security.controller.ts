@@ -145,7 +145,7 @@ export class SecurityController {
 
       // Send an email to the user's email address
 
-      let myuuid = uuidv4();
+      const myuuid = uuidv4();
       savedUser.enableKey = myuuid;
       savedUser.activate = false;
 
@@ -156,7 +156,7 @@ export class SecurityController {
         return e;
       }
 
-      var htmlWelcome = renderWelcome(savedUser.enableKey, environment.serverUrl);
+      const htmlWelcome = renderWelcome(savedUser.enableKey, environment.serverUrl);
 
       const nodeMailer: SMTPTransport.SentMessageInfo = await this.emailService.sendResetPasswordMail(
         savedUser, htmlWelcome, '[Equipo Offix] Registro de usuario'
@@ -361,7 +361,7 @@ export class SecurityController {
 
       // Send an email to the user's email address
 
-      let myuuid = uuidv4();
+      const myuuid = uuidv4();
       savedUser.enableKey = myuuid;
       savedUser.activate = false;
 
@@ -372,7 +372,7 @@ export class SecurityController {
         return e;
       }
 
-      var htmlWelcome = renderWelcome(savedUser.enableKey, environment.applicationUrl);
+      const htmlWelcome = renderWelcome(savedUser.enableKey, environment.applicationUrl);
 
       const nodeMailer: SMTPTransport.SentMessageInfo = await this.emailService.sendResetPasswordMail(
         savedUser, htmlWelcome, '[Equipo Offix] Registro de usuario'
@@ -430,7 +430,7 @@ export class SecurityController {
     }
     // Send an email to the user's email address
 
-    var htmlResetPassword = renderCode(foundUser.resetKey);
+    const htmlResetPassword = renderCode(foundUser.resetKey);
 
     const nodeMailer: SMTPTransport.SentMessageInfo = await this.emailService.sendResetPasswordMail(
       foundUser, htmlResetPassword, '[Offix] Reiniciar contrasenna'
@@ -526,6 +526,40 @@ export class SecurityController {
     }
 
     return foundUser;
+
+
+  }
+
+
+  @get('/api/security/verifytoken', {
+    responses: {
+      '200': {
+        description: 'The current user profile',
+        content: {
+          'application/json': {
+            schema: UserProfileSchema,
+          },
+        },
+      },
+    },
+  })
+  async verifyToken(
+    @param.query.string('token') token: string
+   ): Promise<UserProfile> {
+
+    try{
+      const userProfile: UserProfile = await this.jwtService.verifyToken(token);
+
+      if(userProfile)
+        return userProfile;
+      else
+      throw new HttpErrors.NotFound(
+        'Token not found',
+      );
+    }
+    catch(e){
+      return e;
+    }
 
 
   }
