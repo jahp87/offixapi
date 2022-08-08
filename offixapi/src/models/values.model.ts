@@ -1,8 +1,7 @@
-import {Entity, hasMany, model, property} from '@loopback/repository';
-
+import {Entity, model, property} from '@loopback/repository';
 
 @model()
-export class Category extends Entity {
+export class Values extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -42,25 +41,16 @@ export class Category extends Entity {
 
   @property({
     type: 'string',
-    required: true,
   })
-  image: string;
+  atributeId?: string;
 
-  @hasMany(() => Category)
-  children: Category[];
-
-  @property({
-    type: 'string',
-  })
-  categoryId?: string;
-
-  constructor(data?: Partial<Category>) {
+  constructor(data?: Partial<Values>) {
     super(data);
   }
 }
 
-export interface CategoryRelations {
+export interface ValuesRelations {
   // describe navigational properties here
 }
 
-export type CategoryWithRelations = Category & CategoryRelations;
+export type ValuesWithRelations = Values & ValuesRelations;

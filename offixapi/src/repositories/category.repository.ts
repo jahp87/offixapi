@@ -1,5 +1,5 @@
-import {inject} from '@loopback/core';
-import {DefaultCrudRepository} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {DefaultCrudRepository, HasManyRepositoryFactory, repository} from '@loopback/repository';
 import {OffixdbDataSource} from '../datasources';
 import {Category, CategoryRelations} from '../models';
 
@@ -8,9 +8,14 @@ export class CategoryRepository extends DefaultCrudRepository<
   typeof Category.prototype.id,
   CategoryRelations
 > {
+
+  public readonly children: HasManyRepositoryFactory<Category, typeof Category.prototype.id>;
+
   constructor(
-    @inject('datasources.offixdb') dataSource: OffixdbDataSource,
+    @inject('datasources.offixdb') dataSource: OffixdbDataSource, @repository.getter('CategoryRepository') protected categoryRepositoryGetter: Getter<CategoryRepository>,
   ) {
     super(Category, dataSource);
+    this.children = this.createHasManyRepositoryFactoryFor('children', categoryRepositoryGetter,);
+    this.registerInclusionResolver('children', this.children.inclusionResolver);
   }
 }

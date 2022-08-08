@@ -38,4 +38,6 @@ export * from './state.controller';
 export * from './tax.controller';
 export * from './type-service-service.controller';
 export * from './type-service.controller';
-
+export * from './category-category.controller';
+export * from './atribute-values.controller';
+export * from './attribute.controller';

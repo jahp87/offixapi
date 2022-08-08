@@ -39,6 +39,12 @@ export class Brand extends Entity {
   })
   image: string;
 
+  @property({
+    type: 'string',
+    required: true,
+  })
+  slug: string;
+
 
   constructor(data?: Partial<Brand>) {
     super(data);

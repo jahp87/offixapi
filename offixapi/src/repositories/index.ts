@@ -22,3 +22,5 @@ export * from './user.repository';
 
 
 
+export * from './atribute.repository';
+export * from './values.repository';

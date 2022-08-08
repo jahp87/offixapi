@@ -24,3 +24,5 @@ export * from './user.model';
 
 
 
+export * from './atribute.model';
+export * from './values.model';
