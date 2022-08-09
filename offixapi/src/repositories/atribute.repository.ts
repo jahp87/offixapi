@@ -31,4 +31,14 @@ export class AtributeRepository extends DefaultCrudRepository<
 
     )
   }
+
+  async fulldata(): Promise<Atribute[]>{
+    const response = this.find({
+      include: [
+        {relation: 'values'}
+      ]
+    });
+
+    return response;
+  }
 }

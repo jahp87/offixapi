@@ -203,4 +203,29 @@ export class AttributeController {
     @param.path.string('id') id: string){
     return this.atributeRepository.fulldataById(id);
   }
+
+
+  @get('/api/attributes/fulldata')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'Array of Atribute model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Atribute, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async fulldata(
+
+  ): Promise<Atribute[]> {
+    return this.atributeRepository.fulldata();
+  }
+
 }

@@ -3,6 +3,8 @@ import {Category} from './category.model';
 import {ProductCategoryRelation} from './product-category-relation.model';
 import {ProductTaxRelation} from './product-tax-relation.model';
 import {Tax} from './tax.model';
+import {Atribute} from './atribute.model';
+import {ProductAttributeRelation} from './product-attribute-relation.model';
 
 @model({settings: {strict: false}})
 export class Product extends Entity {
@@ -51,6 +53,18 @@ export class Product extends Entity {
 
   @property({
     type: 'number',
+    required: true,
+  })
+  rating: number;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  reviews: number;
+
+  @property({
+    type: 'number',
   })
   badge: number;
 
@@ -78,11 +92,9 @@ export class Product extends Entity {
 
   @hasMany(() => Tax, {through: {model: () => ProductTaxRelation}})
   taxes: Tax[];
-  // Define well-known properties here
 
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  @hasMany(() => Atribute, {through: {model: () => ProductAttributeRelation, keyTo: 'attributeId'}})
+  atributes: Atribute[];
 
   constructor(data?: Partial<Product>) {
     super(data);

@@ -24,3 +24,4 @@ export * from './user.repository';
 
 export * from './atribute.repository';
 export * from './values.repository';
+export * from './product-attribute-relation.repository';

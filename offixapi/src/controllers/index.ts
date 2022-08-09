@@ -41,3 +41,4 @@ export * from './type-service.controller';
 export * from './category-category.controller';
 export * from './atribute-values.controller';
 export * from './attribute.controller';
+export * from './product-atribute.controller';
