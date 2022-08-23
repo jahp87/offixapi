@@ -184,4 +184,26 @@ export class CategoryController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.categoryRepository.deleteById(id);
   }
+
+  @get('/api/categories/fulldata')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user', 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'Array of Category model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Category, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async fulldata(
+  ): Promise<Category[]> {
+    return this.categoryRepository.fulldata();
+  }
 }

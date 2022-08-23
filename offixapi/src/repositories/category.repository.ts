@@ -18,4 +18,12 @@ export class CategoryRepository extends DefaultCrudRepository<
     this.children = this.createHasManyRepositoryFactoryFor('children', categoryRepositoryGetter,);
     this.registerInclusionResolver('children', this.children.inclusionResolver);
   }
+
+  async fulldata(): Promise<Category[]> {
+    return this.find({
+      include: [
+        {relation: 'children'}
+      ]
+    })
+  }
 }

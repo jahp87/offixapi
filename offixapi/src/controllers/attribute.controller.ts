@@ -66,11 +66,6 @@ export class AttributeController {
   }
 
   @get('/api/attributes')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Array of Atribute model instances',
     content: {
@@ -186,11 +181,6 @@ export class AttributeController {
   }
 
   @get('/api/attributes/fulldata/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'user', 'business'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Attribute model instance',
     content: {
@@ -206,11 +196,6 @@ export class AttributeController {
 
 
   @get('/api/attributes/fulldata')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Array of Atribute model instances',
     content: {

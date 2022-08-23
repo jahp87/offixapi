@@ -66,11 +66,6 @@ export class BrandController {
   }
 
   @get('/api/brands')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'user', 'business'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Array of Brand model instances',
     content: {
@@ -113,11 +108,6 @@ export class BrandController {
   }
 
   @get('/api/brands/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'user', 'business'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Brand model instance',
     content: {
@@ -186,11 +176,7 @@ export class BrandController {
   }
 
   @get('/api/brands/fulldata')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'user', 'business'],
-    voters: [basicAuthorization],
-  })
+
   @response(200, {
     description: 'Array of Brand model instances',
     content: {
@@ -208,11 +194,7 @@ export class BrandController {
   }
 
   @get('/api/brands/fulldata/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'user', 'business'],
-    voters: [basicAuthorization],
-  })
+
   @response(200, {
     description: 'Brand model instance',
     content: {
