@@ -1,5 +1,6 @@
 import {authenticate} from '@loopback/authentication';
 import {authorize} from '@loopback/authorization';
+import {bind, BindingScope} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -17,6 +18,7 @@ import {basicAuthorization} from '../middlewares/auth.midd';
 import {Category} from '../models';
 import {CategoryRepository} from '../repositories';
 
+@bind({scope: BindingScope.SINGLETON})
 export class CategoryController {
   constructor(
     @repository(CategoryRepository)

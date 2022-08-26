@@ -1,4 +1,4 @@
-import {Entity, hasMany, model, property} from '@loopback/repository';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
 
 
 @model()
@@ -49,10 +49,8 @@ export class Category extends Entity {
   @hasMany(() => Category)
   children: Category[];
 
-  @property({
-    type: 'string',
-  })
-  categoryId?: string;
+  @belongsTo(() => Category)
+  categoryId: string;
 
   constructor(data?: Partial<Category>) {
     super(data);
