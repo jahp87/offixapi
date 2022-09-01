@@ -205,7 +205,7 @@ export class CategoryController {
     },
   })
   async fulldata(
-  ): Promise<Category[]> {
+  ): Promise<Category | null> {
     return this.categoryRepository.fulldata();
   }
 }
