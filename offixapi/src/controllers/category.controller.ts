@@ -188,11 +188,6 @@ export class CategoryController {
   }
 
   @get('/api/categories/fulldata')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin', 'user', 'business'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Array of Category model instances',
     content: {
