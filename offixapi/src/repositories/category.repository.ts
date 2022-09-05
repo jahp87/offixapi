@@ -44,7 +44,21 @@ export class CategoryRepository extends DefaultCrudRepository<
                     scope:{
                       include:[
                         {
-                          relation:'children'
+                          relation:'children',
+                          scope:{
+                            include:[
+                             {
+                              relation:'children',
+                              scope:{
+                                include:[
+                                  {
+                                    relation:'children'
+                                  }
+                                ]
+                              }
+                             }
+                            ]
+                          }
                         }
                       ]
                     }
