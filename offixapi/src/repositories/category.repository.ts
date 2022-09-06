@@ -26,10 +26,10 @@ export class CategoryRepository extends DefaultCrudRepository<
     this.registerInclusionResolver('children', this.children.inclusionResolver);
   }
 
-  async fulldata(): Promise<Category | null> {
+  async fulldata(categoryId: string): Promise<Category | null> {
     return this.findOne(
       {where:{
-        categoryId: undefined
+        categoryId: categoryId
       },
       include: [
         {relation: 'children',
