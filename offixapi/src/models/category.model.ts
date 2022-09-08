@@ -46,6 +46,12 @@ export class Category extends Entity {
   })
   image: string;
 
+  @property({
+    type: 'number',
+    required: true,
+  })
+  items: number;
+
   @hasMany(() => Category)
   children: Category[];
 
