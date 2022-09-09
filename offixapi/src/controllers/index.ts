@@ -44,3 +44,4 @@ export * from './attribute.controller';
 export * from './product-atribute.controller';
 export * from './review-product.controller';
 export * from './review.controller';
+export * from './product-brand.controller';
