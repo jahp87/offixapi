@@ -1,7 +1,7 @@
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, DefaultCrudRepository, HasManyThroughRepositoryFactory, repository} from '@loopback/repository';
+import {DefaultCrudRepository, HasManyThroughRepositoryFactory, repository} from '@loopback/repository';
 import {OffixdbDataSource} from '../datasources';
-import {Atribute, Brand, Category, Product, ProductAttributeRelation, ProductCategoryRelation, ProductRelations, ProductTaxRelation, Tax} from '../models';
+import {Atribute, Category, Product, ProductAttributeRelation, ProductCategoryRelation, ProductRelations, ProductTaxRelation, Tax} from '../models';
 import {AtributeRepository} from './atribute.repository';
 import {BrandRepository} from './brand.repository';
 import {CategoryRepository} from './category.repository';
@@ -31,14 +31,13 @@ export class ProductRepository extends DefaultCrudRepository<
           typeof Product.prototype.id
         >;
 
-  public readonly brand: BelongsToAccessor<Brand, typeof Product.prototype.id>;
+
 
   constructor(
     @inject('datasources.offixdb') dataSource: OffixdbDataSource, @repository.getter('ProductCategoryRelationRepository') protected productCategoryRelationRepositoryGetter: Getter<ProductCategoryRelationRepository>, @repository.getter('CategoryRepository') protected categoryRepositoryGetter: Getter<CategoryRepository>, @repository.getter('ProductTaxRelationRepository') protected productTaxRelationRepositoryGetter: Getter<ProductTaxRelationRepository>, @repository.getter('TaxRepository') protected taxRepositoryGetter: Getter<TaxRepository>, @repository.getter('ProductAttributeRelationRepository') protected productAttributeRelationRepositoryGetter: Getter<ProductAttributeRelationRepository>, @repository.getter('AtributeRepository') protected atributeRepositoryGetter: Getter<AtributeRepository>, @repository.getter('BrandRepository') protected brandRepositoryGetter: Getter<BrandRepository>,
   ) {
     super(Product, dataSource);
-    this.brand = this.createBelongsToAccessorFor('brand', brandRepositoryGetter,);
-    this.registerInclusionResolver('brand', this.brand.inclusionResolver);
+
     this.atributes = this.createHasManyThroughRepositoryFactoryFor('atributes', atributeRepositoryGetter, productAttributeRelationRepositoryGetter,);
     this.registerInclusionResolver('atributes', this.atributes.inclusionResolver);
     this.taxes = this.createHasManyThroughRepositoryFactoryFor('taxes', taxRepositoryGetter, productTaxRelationRepositoryGetter,);
@@ -51,8 +50,7 @@ export class ProductRepository extends DefaultCrudRepository<
     return this.find({
       include: [
         {relation: 'categories'},
-        {relation: 'taxes'},
-        {relation: 'brand'}
+        {relation: 'taxes'}
       ]
     })
   }
@@ -63,8 +61,7 @@ export class ProductRepository extends DefaultCrudRepository<
       {
         include: [
           {relation: 'categories'},
-          {relation: 'taxes'},
-          {relation: 'brand'}
+          {relation: 'taxes'}
         ]
       }
 

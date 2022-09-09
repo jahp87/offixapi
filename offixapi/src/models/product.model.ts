@@ -1,11 +1,10 @@
-import {Entity, hasMany, model, property, belongsTo} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import {Atribute} from './atribute.model';
 import {Category} from './category.model';
 import {ProductAttributeRelation} from './product-attribute-relation.model';
 import {ProductCategoryRelation} from './product-category-relation.model';
 import {ProductTaxRelation} from './product-tax-relation.model';
 import {Tax} from './tax.model';
-import {Brand} from './brand.model';
 
 @model({settings: {strict: false}})
 export class Product extends Entity {
@@ -75,6 +74,11 @@ export class Product extends Entity {
   description: string;
 
   @property({
+    type: 'string',
+  })
+  brand: string;
+
+  @property({
     type: 'array',
     itemType: 'string',
     required: true,
@@ -102,8 +106,7 @@ export class Product extends Entity {
   @hasMany(() => Atribute, {through: {model: () => ProductAttributeRelation, keyTo: 'attributeId'}})
   atributes: Atribute[];
 
-  @belongsTo(() => Brand)
-  brandId: string;
+
 
   constructor(data?: Partial<Product>) {
     super(data);
