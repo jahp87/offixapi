@@ -27,3 +27,4 @@ export * from './user.model';
 export * from './atribute.model';
 export * from './values.model';
 export * from './product-attribute-relation.model';
+export * from './review.model';
