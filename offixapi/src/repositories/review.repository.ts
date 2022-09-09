@@ -9,9 +9,7 @@ export class ReviewRepository extends DefaultCrudRepository<
   typeof Review.prototype.id,
   ReviewRelations
 > {
-  fulldata(): Review[] | PromiseLike<Review[]> {
-    throw new Error('Method not implemented.');
-  }
+
 
   public readonly product: BelongsToAccessor<Product, typeof Review.prototype.id>;
 
