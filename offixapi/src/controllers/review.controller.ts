@@ -141,4 +141,36 @@ export class ReviewController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.reviewRepository.deleteById(id);
   }
+
+  @get('/api/reviews/fulldata')
+  @response(200, {
+    description: 'Array of Review model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Review, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async fulldata(
+  ): Promise<Review[]> {
+    return this.reviewRepository.fulldata();
+  }
+
+  @get('/api/reviews/fulldata/{id}')
+  @response(200, {
+    description: 'Product model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(Review, {includeRelations: true}),
+      },
+    },
+  })
+  async fulldataId(
+    @param.path.string('id') id: string,
+  ): Promise<Review> {
+    return this.reviewRepository.fulldataId(id);
+  }
 }
