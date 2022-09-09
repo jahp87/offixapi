@@ -1,10 +1,10 @@
 import {Entity, hasMany, model, property} from '@loopback/repository';
+import {Atribute} from './atribute.model';
 import {Category} from './category.model';
+import {ProductAttributeRelation} from './product-attribute-relation.model';
 import {ProductCategoryRelation} from './product-category-relation.model';
 import {ProductTaxRelation} from './product-tax-relation.model';
 import {Tax} from './tax.model';
-import {Atribute} from './atribute.model';
-import {ProductAttributeRelation} from './product-attribute-relation.model';
 
 @model({settings: {strict: false}})
 export class Product extends Entity {
@@ -64,9 +64,9 @@ export class Product extends Entity {
   reviews: number;
 
   @property({
-    type: 'number',
+    type: 'string',
   })
-  badge: number;
+  badge: string;
 
   @property({
     type: 'array',
