@@ -186,11 +186,6 @@ export class ProductController {
   }
 
   @get('/api/products/fulldata')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Array of Product model instances',
     content: {
@@ -208,11 +203,6 @@ export class ProductController {
   }
 
   @get('/api/products/fulldata/{id}')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
   @response(200, {
     description: 'Product model instance',
     content: {
