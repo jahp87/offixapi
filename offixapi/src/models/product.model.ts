@@ -47,7 +47,7 @@ export class Product extends Entity {
 
   @property({
     type: 'number',
-    required: true,
+    dataType: 'float'
   })
   price: number;
 
