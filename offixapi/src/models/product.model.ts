@@ -66,7 +66,7 @@ export class Product extends Entity {
   @property({
     type: 'string',
   })
-  badge: string;
+  badges: string;
 
   @property({
     type: 'string',
@@ -89,7 +89,7 @@ export class Product extends Entity {
     type: 'boolean',
     required: true,
   })
-  availability: boolean;
+  availability: string;
 
   @property({
     type: 'number',

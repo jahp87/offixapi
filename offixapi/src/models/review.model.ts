@@ -1,4 +1,4 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {Product} from './product.model';
 
 @model()
@@ -13,22 +13,37 @@ export class Review extends Entity {
   @property({
     type: 'number',
   })
-  start?: number;
+  rating: number;
 
   @property({
     type: 'string',
   })
-  name?: string;
+  name: string;
 
   @property({
     type: 'string',
   })
-  email?: string;
+  email: string;
 
   @property({
     type: 'string',
   })
-  text?: string;
+  text: string;
+
+  @property({
+    type: 'string',
+  })
+  avatar: string;
+
+  @property({
+    type: 'string',
+  })
+  author: string;
+
+  @property({
+    type: 'string',
+  })
+  date: Date;
 
   @belongsTo(() => Product)
   productId: string;
