@@ -74,6 +74,11 @@ export class Product extends Entity {
   description: string;
 
   @property({
+    type: 'number',
+  })
+  stock: number;
+
+  @property({
     type: 'string',
   })
   brand: string;
@@ -89,7 +94,7 @@ export class Product extends Entity {
     type: 'boolean',
     required: true,
   })
-  availability: string;
+  availability: boolean;
 
   @property({
     type: 'number',
