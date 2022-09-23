@@ -91,10 +91,10 @@ export class Product extends Entity {
   images: string[];
 
   @property({
-    type: 'boolean',
+    type: 'string',
     required: true,
   })
-  availability: boolean;
+  availability: string;
 
   @property({
     type: 'number',
