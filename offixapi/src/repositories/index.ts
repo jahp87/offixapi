@@ -26,3 +26,5 @@ export * from './atribute.repository';
 export * from './values.repository';
 export * from './product-attribute-relation.repository';
 export * from './review.repository';
+export * from './sell-order.repository';
+export * from './sell-order-details.repository';

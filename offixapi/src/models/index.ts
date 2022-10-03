@@ -28,3 +28,5 @@ export * from './atribute.model';
 export * from './values.model';
 export * from './product-attribute-relation.model';
 export * from './review.model';
+export * from './sell-order.model';
+export * from './sell-order-details.model';
