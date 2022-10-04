@@ -1,5 +1,4 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
-import {OrderService} from './order-service.model';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {User} from './user.model';
 
 @model()
@@ -32,10 +31,8 @@ export class SellOrder extends Entity {
   @property({
     type: 'string',
   })
-  description?: string;
+  description: string;
 
-  @belongsTo(() => OrderService)
-  orderId: string;
 
   @belongsTo(() => User)
   clientId: string;

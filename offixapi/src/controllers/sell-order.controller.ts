@@ -26,7 +26,7 @@ export class SellOrderController {
   @post('/api/sellorders')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -52,7 +52,7 @@ export class SellOrderController {
   @get('/api/sellorders/count')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -68,7 +68,7 @@ export class SellOrderController {
   @get('/api/sellorders')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -91,7 +91,7 @@ export class SellOrderController {
   @patch('/api/sellorders')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -115,7 +115,7 @@ export class SellOrderController {
   @get('/api/sellorders/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -136,7 +136,7 @@ export class SellOrderController {
   @patch('/api/sellorders/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'business'],
     voters: [basicAuthorization],
   })
   @response(204, {
@@ -159,7 +159,7 @@ export class SellOrderController {
   @put('/api/sellorders/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'business'],
     voters: [basicAuthorization],
   })
   @response(204, {
@@ -175,7 +175,7 @@ export class SellOrderController {
   @del('/api/sellorders/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'business'],
     voters: [basicAuthorization],
   })
   @response(204, {
@@ -199,7 +199,7 @@ export class SellOrderController {
   })
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'business'],
     voters: [basicAuthorization],
   })
   async fulldata(
@@ -218,7 +218,7 @@ export class SellOrderController {
   })
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'business'],
     voters: [basicAuthorization],
   })
   async fulldataById(

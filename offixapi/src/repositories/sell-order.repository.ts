@@ -1,7 +1,7 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, DefaultCrudRepository, repository} from '@loopback/repository';
 import {OffixdbDataSource} from '../datasources';
-import {OrderService, SellOrder, SellOrderRelations, User} from '../models';
+import {SellOrder, SellOrderRelations, User} from '../models';
 import {OrderServiceRepository} from './order-service.repository';
 import {UserRepository} from './user.repository';
 
@@ -12,8 +12,6 @@ export class SellOrderRepository extends DefaultCrudRepository<
 > {
 
 
-  public readonly order: BelongsToAccessor<OrderService, typeof SellOrder.prototype.id>;
-
   public readonly client: BelongsToAccessor<User, typeof SellOrder.prototype.id>;
 
   constructor(
@@ -22,8 +20,7 @@ export class SellOrderRepository extends DefaultCrudRepository<
     super(SellOrder, dataSource);
     this.client = this.createBelongsToAccessorFor('client', userRepositoryGetter,);
     this.registerInclusionResolver('client', this.client.inclusionResolver);
-    this.order = this.createBelongsToAccessorFor('order', orderServiceRepositoryGetter,);
-    this.registerInclusionResolver('order', this.order.inclusionResolver);
+
   }
 
   async fulldata(): Promise<SellOrder[]>{
@@ -31,9 +28,6 @@ export class SellOrderRepository extends DefaultCrudRepository<
       include:[
         {
           relation: 'client'
-        },
-        {
-          relation:'order'
         }
       ]
     });
@@ -44,9 +38,6 @@ export class SellOrderRepository extends DefaultCrudRepository<
       include:[
         {
           relation: 'client'
-        },
-        {
-          relation:'order'
         }
       ]
     });
