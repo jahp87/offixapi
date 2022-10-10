@@ -48,4 +48,5 @@ export * from './state.controller';
 export * from './tax.controller';
 export * from './type-service-service.controller';
 export * from './type-service.controller';
-
+export * from './sell-order-details-sell-order.controller';
+export * from './sell-order-sell-order-details.controller';
