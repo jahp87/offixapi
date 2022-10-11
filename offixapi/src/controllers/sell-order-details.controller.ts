@@ -26,7 +26,7 @@ export class SellOrderDetailsController {
   @post('/api/sellorderdetails')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin' , 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -49,10 +49,50 @@ export class SellOrderDetailsController {
     return this.sellOrderDetailsRepository.create(sellOrderDetails);
   }
 
+  @post('/api/sellorderdetails/multicreate')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin' , 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'SellOrderDetails model instance',
+    content: {'application/json': {schema: getModelSchemaRef(SellOrderDetails)}},
+  })
+  async multicreate(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: {
+            type: 'array',
+            items: getModelSchemaRef(SellOrderDetails),
+          },
+        },
+      },
+    })
+    listsellOrderDetails: Omit<SellOrderDetails[], 'id'>,
+  ): Promise<SellOrderDetails[]> {
+
+    const listsellOrderDetailsId: string[] = [];
+    for(const sellOrderDetail of listsellOrderDetails){
+       const newSellOrderDetail = await this.sellOrderDetailsRepository.create(sellOrderDetail);
+       listsellOrderDetailsId.push(newSellOrderDetail.id);
+    }
+    return this.sellOrderDetailsRepository.find(
+      {
+        where:{
+          id:{
+           inq: listsellOrderDetailsId
+          }
+        }
+      }
+    )
+  }
+
   @get('/api/sellorderdetails/count')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin' , 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -68,7 +108,7 @@ export class SellOrderDetailsController {
   @get('/api/sellorderdetails')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin' , 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -91,7 +131,7 @@ export class SellOrderDetailsController {
   @patch('/api/sellorderdetails')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin' , 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -115,7 +155,7 @@ export class SellOrderDetailsController {
   @get('/api/sellorderdetails/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin' , 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -136,7 +176,7 @@ export class SellOrderDetailsController {
   @patch('/api/sellorderdetails/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin' , 'business'],
     voters: [basicAuthorization],
   })
   @response(204, {
@@ -159,7 +199,7 @@ export class SellOrderDetailsController {
   @put('/api/sellorderdetails/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin' , 'business'],
     voters: [basicAuthorization],
   })
   @response(204, {
@@ -175,7 +215,7 @@ export class SellOrderDetailsController {
   @del('/api/sellorderdetails/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin' , 'business'],
     voters: [basicAuthorization],
   })
   @response(204, {
@@ -188,7 +228,7 @@ export class SellOrderDetailsController {
   @get('/api/sellorderdetails/fulldata')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin' , 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
@@ -210,7 +250,7 @@ export class SellOrderDetailsController {
   @get('/api/sellorderdetails/fulldata/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin' , 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {

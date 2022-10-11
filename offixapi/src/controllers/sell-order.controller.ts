@@ -49,6 +49,46 @@ export class SellOrderController {
     return this.sellOrderRepository.create(sellOrder);
   }
 
+  @post('/api/sellorders/multicreate')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'SellOrder model instance',
+    content: {'application/json': {schema: getModelSchemaRef(SellOrder)}},
+  })
+  async multicreate(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: {
+            type: 'array',
+            items: getModelSchemaRef(SellOrder),
+          },
+        },
+      },
+    })
+    listsellOrder: Omit<SellOrder[], 'id'>,
+  ): Promise<SellOrder[]> {
+
+    const listSellOrder: string[] = [];
+    for(const sellOrder of listsellOrder){
+       const newSellOrder = await this.sellOrderRepository.create(sellOrder);
+       listSellOrder.push(newSellOrder.id);
+    }
+
+    return this.sellOrderRepository.find({
+      where:{
+        id:{
+          inq: listSellOrder
+        }
+      }
+    })
+
+  }
+
   @get('/api/sellorders/count')
   @authenticate('jwt')
   @authorize({

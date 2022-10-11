@@ -1,6 +1,6 @@
-import {belongsTo, Entity, model, property, hasMany} from '@loopback/repository';
-import {User} from './user.model';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
 import {SellOrderDetails} from './sell-order-details.model';
+import {User} from './user.model';
 
 @model()
 export class SellOrder extends Entity {
@@ -9,7 +9,7 @@ export class SellOrder extends Entity {
     id: true,
     generated: true,
   })
-  id?: string;
+  id: string;
 
   @property({
     type: 'date',

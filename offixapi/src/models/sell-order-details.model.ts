@@ -1,4 +1,4 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {Product} from './product.model';
 import {SellOrder} from './sell-order.model';
 
@@ -9,7 +9,7 @@ export class SellOrderDetails extends Entity {
     id: true,
     generated: true,
   })
-  id?: string;
+  id: string;
 
   @property({
     type: 'number',

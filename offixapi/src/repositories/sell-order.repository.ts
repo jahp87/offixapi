@@ -35,7 +35,21 @@ export class SellOrderRepository extends DefaultCrudRepository<
           relation: 'client'
         },
         {
-          relation:'items'
+          relation:'items',
+          scope:{
+            include:[
+              {
+                relation:'product',
+                scope:{
+                  include:[
+                    {
+                      relation:'categories'
+                    }
+                  ]
+                }
+              }
+            ]
+          }
         }
       ]
     });
@@ -48,7 +62,21 @@ export class SellOrderRepository extends DefaultCrudRepository<
           relation: 'client'
         },
         {
-          relation:'items'
+          relation:'items',
+          scope:{
+            include:[
+              {
+                relation:'product',
+                scope:{
+                  include:[
+                    {
+                      relation:'categories'
+                    }
+                  ]
+                }
+              }
+            ]
+          }
         }
       ]
     });
