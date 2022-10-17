@@ -189,7 +189,7 @@ export class ConsecutiveController {
     await this.consecutiveRepository.deleteById(id);
   }
 
-  @get('/api/consecutives/findbydocument')
+  @get('/api/consecutives/findbydocument/{document}')
   @authenticate('jwt')
   @authorize({
     allowedRoles: ['admin', 'user', 'business'],
