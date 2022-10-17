@@ -28,3 +28,4 @@ export * from './product-attribute-relation.repository';
 export * from './review.repository';
 export * from './sell-order.repository';
 export * from './sell-order-details.repository';
+export * from './consecutive.repository';

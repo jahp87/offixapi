@@ -30,3 +30,4 @@ export * from './product-attribute-relation.model';
 export * from './review.model';
 export * from './sell-order.model';
 export * from './sell-order-details.model';
+export * from './consecutive.model';
