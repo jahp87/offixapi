@@ -179,4 +179,30 @@ export class ConsecutiveController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.consecutiveRepository.deleteById(id);
   }
+
+  @get('/api/consecutives/findbydocument')
+  @authorize({
+    allowedRoles: ['admin', 'user', 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'Array of Consecutive model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Consecutive, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async findbydocument(
+    @param.path.string('document') document: string,
+  ): Promise<Consecutive[]> {
+    return this.consecutiveRepository.find({
+      where:{
+        document:document
+      }
+    });
+  }
 }
