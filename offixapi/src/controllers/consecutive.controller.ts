@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {authorize} from '@loopback/authorization';
 import {
   Count,
@@ -27,6 +28,7 @@ export class ConsecutiveController {
     allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
+  @authenticate('jwt')
   @response(200, {
     description: 'Consecutive model instance',
     content: {'application/json': {schema: getModelSchemaRef(Consecutive)}},
@@ -48,6 +50,7 @@ export class ConsecutiveController {
   }
 
   @get('/api/consecutives/count')
+  @authenticate('jwt')
   @authorize({
     allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
@@ -63,6 +66,7 @@ export class ConsecutiveController {
   }
 
   @get('/api/consecutives')
+  @authenticate('jwt')
   @authorize({
     allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
@@ -85,6 +89,7 @@ export class ConsecutiveController {
   }
 
   @patch('/api/consecutives')
+  @authenticate('jwt')
   @authorize({
     allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
@@ -120,6 +125,7 @@ export class ConsecutiveController {
       },
     },
   })
+  @authenticate('jwt')
   @authorize({
     allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
@@ -135,6 +141,7 @@ export class ConsecutiveController {
   @response(204, {
     description: 'Consecutive PATCH success',
   })
+  @authenticate('jwt')
   @authorize({
     allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
@@ -157,6 +164,7 @@ export class ConsecutiveController {
   @response(204, {
     description: 'Consecutive PUT success',
   })
+  @authenticate('jwt')
   @authorize({
     allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
@@ -169,6 +177,7 @@ export class ConsecutiveController {
   }
 
   @del('/api/consecutives/{id}')
+  @authenticate('jwt')
   @authorize({
     allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
@@ -181,6 +190,7 @@ export class ConsecutiveController {
   }
 
   @get('/api/consecutives/findbydocument')
+  @authenticate('jwt')
   @authorize({
     allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
