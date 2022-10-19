@@ -81,4 +81,34 @@ export class SellOrderRepository extends DefaultCrudRepository<
       ]
     });
   }
+
+  async fulldatabyuser(userId: string): Promise<SellOrder[]>{
+    return this.find({
+      where:{
+        clientId: userId
+      },
+      include:[
+        {
+          relation: 'client'
+        },
+        {
+          relation:'items',
+          scope:{
+            include:[
+              {
+                relation:'product',
+                scope:{
+                  include:[
+                    {
+                      relation:'categories'
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    })
+  }
 }

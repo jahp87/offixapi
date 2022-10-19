@@ -266,4 +266,29 @@ export class SellOrderController {
   ): Promise<SellOrder> {
     return this.sellOrderRepository.fulldataById(id);
   }
+
+
+  @get('/api/sellorders/fulldatabyuser/{clientId}')
+  @response(200, {
+    description: 'Array of SellOrder model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(SellOrder, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'business'],
+    voters: [basicAuthorization],
+  })
+  async fulldatabyuser(
+    @param.path.string('clientId') clientId: string,
+  ): Promise<SellOrder[]> {
+    return this.sellOrderRepository.fulldatabyuser(clientId);
+  }
+
 }
