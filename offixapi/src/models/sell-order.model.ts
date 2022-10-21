@@ -59,6 +59,12 @@ export class SellOrder extends Entity {
   })
   billingAddress: string;
 
+  @property({
+    type: 'array',
+    itemType: Object,
+  })
+  additionalLines: Object[];
+
 
   @belongsTo(() => User)
   clientId: string;

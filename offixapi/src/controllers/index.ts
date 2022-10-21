@@ -51,3 +51,7 @@ export * from './type-service.controller';
 export * from './sell-order-details-sell-order.controller';
 export * from './sell-order-sell-order-details.controller';
 export * from './consecutive.controller';
+export * from './province.controller';
+export * from './cat-shipping-province.controller';
+export * from './cat-shipping-city.controller';
+export * from './cat-shipping.controller';

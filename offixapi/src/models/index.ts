@@ -31,3 +31,5 @@ export * from './review.model';
 export * from './sell-order.model';
 export * from './sell-order-details.model';
 export * from './consecutive.model';
+export * from './province.model';
+export * from './cat-shipping.model';
