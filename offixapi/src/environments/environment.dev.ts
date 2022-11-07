@@ -3,8 +3,8 @@ export const environment = {
   host: 'smtp.gmail.com',
   port: 587,
   secure: false,
-  user: 'churchapp2022@gmail.com',
-  pass: 'Usuario123',
+  user: 'offixmarketplace@gmail.com',
+  pass: ' Winmaster*1',
   applicationUrl: 'http://shop.offixcorp.com:3000/'
 
 
