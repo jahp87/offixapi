@@ -1,4 +1,4 @@
-import {authenticate, TokenService, UserService} from '@loopback/authentication';
+import {authenticate, UserService} from '@loopback/authentication';
 import {authorize} from '@loopback/authorization';
 import {inject} from '@loopback/core';
 import {model, property, repository} from '@loopback/repository';
@@ -15,7 +15,7 @@ import {User} from '../models';
 import {KeyAndPassword} from '../models/key-and-password.model';
 import {ResetPasswordInit} from '../models/reset-password-init.model';
 import {Credentials, UserCredentialsRepository, UserRepository} from '../repositories';
-import {EmailService, PasswordHasher, validateCredentials} from '../services';
+import {EmailService, JWTService, PasswordHasher, validateCredentials} from '../services';
 import {renderCode, renderWelcome} from '../templates/htmltemplates';
 const UserProfileSchema = {
   type: 'object',
@@ -89,7 +89,7 @@ export class SecurityController {
     @inject(PasswordHasherBindings.PASSWORD_HASHER)
     public passwordHasher: PasswordHasher,
     @inject(TokenServiceBindings.TOKEN_SERVICE)
-    public jwtService: TokenService,
+    public jwtService: JWTService,
     @inject(UserServiceBindings.USER_SERVICE)
     public userService: UserService<User, Credentials>,
     @inject('services.EmailService')
@@ -595,6 +595,25 @@ export class SecurityController {
     }
     return email;
   }
+
+  @get('/api/security/checkexpiration', {
+    responses: {
+      '200': {
+        description: 'The current user profile',
+        content: {
+          'application/json': {
+            schema: UserProfileSchema,
+          },
+        },
+      },
+    },
+  })
+  async checkexpiration(
+    @param.query.string('token') token: string
+   ): Promise<boolean> {
+    const response = await this.jwtService.checkedToken(token);
+    return response;
+   }
 
 
 }

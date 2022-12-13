@@ -38,6 +38,7 @@ export class JWTService implements TokenService {
           name: decodedToken.name,
           id: decodedToken.id,
           role: decodedToken.role,
+
         },
       );
     } catch (error) {
@@ -72,4 +73,21 @@ export class JWTService implements TokenService {
 
     return token;
   }
-}
+
+ async checkedToken(token: string): Promise<boolean>{
+
+  try{
+  const decodedToken = await verifyAsync(token, this.jwtSecret);
+   const expAccessToken = decodedToken.exp;
+   if(expAccessToken > Math.round(new Date().getTime() / 1000))
+    return false;
+   return true;
+
+  }
+  catch(e){
+    return true;
+  }
+ }
+
+ }
+
