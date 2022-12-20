@@ -5,10 +5,10 @@ import {
   CountSchema,
   Filter,
   FilterExcludingWhere,
+  Where,
   model,
   property,
-  repository,
-  Where
+  repository
 } from '@loopback/repository';
 import {
   del, get,
@@ -56,7 +56,7 @@ export class ProductController {
   @post('/api/products')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
