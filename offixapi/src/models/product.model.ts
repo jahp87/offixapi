@@ -53,6 +53,12 @@ export class Product extends Entity {
 
   @property({
     type: 'number',
+    dataType: 'decimal'
+  })
+  priceMayorista: number;
+
+  @property({
+    type: 'number',
     required: true,
   })
   rating: number;

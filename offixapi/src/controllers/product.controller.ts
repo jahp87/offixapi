@@ -145,7 +145,7 @@ export class ProductController {
   @get('/api/products/{id}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin'],
+    allowedRoles: ['admin', 'user', 'business'],
     voters: [basicAuthorization],
   })
   @response(200, {
