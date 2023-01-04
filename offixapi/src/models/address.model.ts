@@ -1,4 +1,4 @@
-import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {Entity, belongsTo, model, property} from '@loopback/repository';
 import {City} from './city.model';
 import {Country} from './country.model';
 import {State} from './state.model';
@@ -88,6 +88,18 @@ export class Address extends Entity {
     required: true,
   })
   isPrincipal: boolean;
+
+  @property({
+    type: 'number',
+    dataType: 'decimal'
+  })
+  latitude: number;
+
+  @property({
+    type: 'number',
+    dataType: 'decimal'
+  })
+  longitude: number;
 
   @belongsTo(() => Country)
   countryId: string;
