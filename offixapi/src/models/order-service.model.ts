@@ -1,8 +1,8 @@
-import {belongsTo, Entity, model, property} from '@loopback/repository';
-import {Service} from './service.model';
-import {User} from './user.model';
+import {Entity, belongsTo, model, property} from '@loopback/repository';
 import {Brand} from './brand.model';
 import {Device} from './device.model';
+import {Service} from './service.model';
+import {User} from './user.model';
 
 @model()
 export class OrderService extends Entity {
@@ -40,9 +40,15 @@ export class OrderService extends Entity {
 
   @property({
     type: 'string',
-    required: true,
+
   })
   address: string;
+
+  @property({
+    type: 'string',
+
+  })
+  orderNum: string;
 
   @property({
     type: 'boolean',

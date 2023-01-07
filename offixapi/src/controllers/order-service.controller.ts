@@ -5,8 +5,8 @@ import {
   CountSchema,
   Filter,
   FilterExcludingWhere,
-  repository,
-  Where
+  Where,
+  repository
 } from '@loopback/repository';
 import {
   del, get,
@@ -225,5 +225,25 @@ export class OrderServiceController {
     @param.path.string('id') id: string,
   ): Promise<OrderService> {
     return this.orderServiceRepository.fulldataById(id);
+  }
+
+  @get('/api/orderservices/fulldatabyuser/{customerId}')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user', 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'OrderService model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(OrderService, {includeRelations: true}),
+      },
+    },
+  })
+  async fulldataByUser(
+    @param.path.string('customerId') customerId: string,
+  ): Promise<OrderService[]> {
+    return this.orderServiceRepository.fulldataByUser(customerId);
   }
 }

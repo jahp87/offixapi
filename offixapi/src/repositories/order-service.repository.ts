@@ -1,11 +1,11 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, DefaultCrudRepository, repository} from '@loopback/repository';
 import {OffixdbDataSource} from '../datasources';
-import {OrderService, OrderServiceRelations, Service, User, Brand, Device} from '../models';
-import {ServiceRepository} from './service.repository';
-import {UserRepository} from './user.repository';
+import {Brand, Device, OrderService, OrderServiceRelations, Service, User} from '../models';
 import {BrandRepository} from './brand.repository';
 import {DeviceRepository} from './device.repository';
+import {ServiceRepository} from './service.repository';
+import {UserRepository} from './user.repository';
 
 export class OrderServiceRepository extends DefaultCrudRepository<
   OrderService,
@@ -59,6 +59,9 @@ export class OrderServiceRepository extends DefaultCrudRepository<
               }
             ]
           }
+        },
+        {
+          relation: 'brand'
         }
       ]
     });
@@ -68,6 +71,34 @@ export class OrderServiceRepository extends DefaultCrudRepository<
     return this.findById(
       id,
       {
+        include: [
+          {
+            relation: 'business'
+          },
+          {
+            relation: 'customer'
+          },
+          {
+            relation: 'service',
+            scope: {
+              include: [
+                {
+                  relation: 'typeService'
+                }
+              ]
+            }
+          }
+        ]
+      }
+    )
+  }
+
+  async fulldataByUser(customerId: string): Promise<OrderService[]> {
+    return this.find(
+      {
+        where:{
+          customerId: customerId
+        },
         include: [
           {
             relation: 'business'
