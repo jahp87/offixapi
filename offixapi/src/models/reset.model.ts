@@ -1,4 +1,5 @@
-import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {Entity, belongsTo, model, property} from '@loopback/repository';
+import {Brand} from './brand.model';
 import {Device} from './device.model';
 
 @model({settings: {strict: false}})
@@ -15,6 +16,25 @@ export class Reset extends Entity {
     required: true,
   })
   filename: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  typeFile: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  model: string;
+
+  @property({
+    type: 'string',
+    required: true,
+    dataType: 'decimal'
+  })
+  price: number;
 
   @property({
     type: 'date',
@@ -37,11 +57,9 @@ export class Reset extends Entity {
   @belongsTo(() => Device)
   deviceId: string;
 
-  // Define well-known properties here
+  @belongsTo(() => Brand)
+  brandId: string;
 
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
 
   constructor(data?: Partial<Reset>) {
     super(data);

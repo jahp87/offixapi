@@ -5,8 +5,8 @@ import {
   CountSchema,
   Filter,
   FilterExcludingWhere,
-  repository,
-  Where
+  Where,
+  repository
 } from '@loopback/repository';
 import {
   del, get,
@@ -183,5 +183,27 @@ export class ResetController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.resetRepository.deleteById(id);
+  }
+
+  @get('/api/resets/fulldata')
+  @authenticate('jwt')
+  @authorize({
+    allowedRoles: ['admin', 'user', 'business'],
+    voters: [basicAuthorization],
+  })
+  @response(200, {
+    description: 'Array of Reset model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Reset),
+        },
+      },
+    },
+  })
+  async fulldata(
+  ): Promise<Reset[]> {
+    return this.resetRepository.fulldata();
   }
 }

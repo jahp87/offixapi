@@ -55,3 +55,4 @@ export * from './province.controller';
 export * from './cat-shipping-province.controller';
 export * from './cat-shipping-city.controller';
 export * from './cat-shipping.controller';
+export * from './reset-brand.controller';
