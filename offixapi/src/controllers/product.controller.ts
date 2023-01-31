@@ -96,12 +96,7 @@ export class ProductController {
   }
 
   @get('/api/products')
-  @authenticate('jwt')
-  @authorize({
-    allowedRoles: ['admin'],
-    voters: [basicAuthorization],
-  })
-  @response(200, {
+   @response(200, {
     description: 'Array of Product model instances',
     content: {
       'application/json': {

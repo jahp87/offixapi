@@ -55,6 +55,25 @@ export class Product extends Entity {
     type: 'number',
     dataType: 'decimal'
   })
+  priceAlt: number;
+
+  @property({
+    type: 'number',
+    dataType: 'decimal'
+  })
+  priceMayoristaAlt: number;
+
+  @property({
+    type: 'number',
+    dataType: 'decimal'
+  })
+  tasaCambio: number;
+
+
+  @property({
+    type: 'number',
+    dataType: 'decimal'
+  })
   priceMayorista: number;
 
   @property({
