@@ -31,3 +31,4 @@ export * from './sell-order-details.repository';
 export * from './consecutive.repository';
 export * from './province.repository';
 export * from './cat-shipping.repository';
+export * from './sale-reset.repository';

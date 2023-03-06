@@ -33,3 +33,4 @@ export * from './sell-order-details.model';
 export * from './consecutive.model';
 export * from './province.model';
 export * from './cat-shipping.model';
+export * from './sale-reset.model';

@@ -230,7 +230,7 @@ export class OrderServiceController {
   @get('/api/orderservices/fulldatabyuser/{customerId}')
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin', 'user', 'business'],
+    allowedRoles: ['admin', 'business', 'user'],
     voters: [basicAuthorization],
   })
   @response(200, {

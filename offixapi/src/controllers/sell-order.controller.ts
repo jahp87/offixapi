@@ -282,7 +282,7 @@ export class SellOrderController {
   })
   @authenticate('jwt')
   @authorize({
-    allowedRoles: ['admin', 'business'],
+    allowedRoles: ['admin', 'business', 'user'],
     voters: [basicAuthorization],
   })
   async fulldatabyuser(

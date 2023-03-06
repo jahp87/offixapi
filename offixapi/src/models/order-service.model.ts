@@ -74,6 +74,12 @@ export class OrderService extends Entity {
   })
   enable: boolean;
 
+  @property({
+    type: 'string',
+  })
+  response: string;
+
+
   @belongsTo(() => User)
   customerId: string;
 

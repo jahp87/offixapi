@@ -60,6 +60,11 @@ export class SellOrder extends Entity {
   billingAddress: string;
 
   @property({
+    type: 'string',
+  })
+  response: string;
+
+  @property({
     type: 'array',
     itemType: Object,
   })

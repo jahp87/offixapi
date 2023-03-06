@@ -56,3 +56,6 @@ export * from './cat-shipping-province.controller';
 export * from './cat-shipping-city.controller';
 export * from './cat-shipping.controller';
 export * from './reset-brand.controller';
+export * from './sale-reset-user.controller';
+export * from './sale-reset-reset.controller';
+export * from './sale-reset.controller';
