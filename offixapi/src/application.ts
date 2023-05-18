@@ -94,6 +94,7 @@ export class OffixapiApplication extends BootMixin(
     destination = destination ?? path.join(__dirname, '../uploads');
     this.bind(STORAGE_DIRECTORY).to(destination);
     const multerOptions: multer.Options = {
+
       storage: multer.diskStorage({
         destination,
         // Use the original file name as is
