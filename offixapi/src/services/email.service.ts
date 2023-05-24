@@ -20,7 +20,11 @@ export class EmailService {
       },
     });
   }
-  async sendResetPasswordMail(user: User, htmlTemplate: string, subject: string): Promise<SMTPTransport.SentMessageInfo> {
+  async sendResetPasswordMail(
+    user: User,
+    htmlTemplate: string,
+    subject: string,
+  ): Promise<SMTPTransport.SentMessageInfo> {
     const transporter = await EmailService.setupTransporter();
 
     const emailTemplate = new EmailTemplate({
@@ -31,11 +35,14 @@ export class EmailService {
     return transporter.sendMail(emailTemplate);
   }
 
-  async sendContactMessage(htmlTemplate: string): Promise<SMTPTransport.SentMessageInfo> {
+  async sendContactMessage(
+    htmlTemplate: string,
+    subject: string,
+  ): Promise<SMTPTransport.SentMessageInfo> {
     const transporter = await EmailService.setupTransporter();
     const emailTemplate = new EmailTemplate({
       to: environment.user,
-      subject: 'Correo de contacto',
+      subject: subject,
       html: htmlTemplate,
     });
     return transporter.sendMail(emailTemplate);

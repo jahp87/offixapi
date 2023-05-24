@@ -5,12 +5,19 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where
+  Where,
 } from '@loopback/repository';
 import {
-  del, get,
-  getModelSchemaRef, HttpErrors, param, patch, post, put, requestBody,
-  response
+  del,
+  get,
+  getModelSchemaRef,
+  HttpErrors,
+  param,
+  patch,
+  post,
+  put,
+  requestBody,
+  response,
 } from '@loopback/rest';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import {ContactEmail} from '../models';
@@ -24,7 +31,7 @@ export class ContactEmailController {
     public contactEmailRepository: ContactEmailRepository,
     @inject('services.EmailService')
     public emailService: EmailService,
-  ) { }
+  ) {}
 
   @post('/api/contactemails')
   @response(200, {
@@ -106,7 +113,8 @@ export class ContactEmailController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(ContactEmail, {exclude: 'where'}) filter?: FilterExcludingWhere<ContactEmail>
+    @param.filter(ContactEmail, {exclude: 'where'})
+    filter?: FilterExcludingWhere<ContactEmail>,
   ): Promise<ContactEmail> {
     return this.contactEmailRepository.findById(id, filter);
   }
@@ -166,32 +174,34 @@ export class ContactEmailController {
     })
     contactEmail: Omit<ContactEmail, 'id'>,
   ): Promise<ContactEmail | undefined> {
-    let contactEmailObject = await this.contactEmailRepository.create(contactEmail);
+    const contactEmailObject = await this.contactEmailRepository.create(
+      contactEmail,
+    );
     //send email
 
-    var htmlContactMessage = renderContact(contactEmailObject.name, contactEmailObject.email, contactEmailObject.body);
-
-    const nodeMailer: SMTPTransport.SentMessageInfo = await this.emailService.sendContactMessage(
-      htmlContactMessage
+    const htmlContactMessage = renderContact(
+      contactEmailObject.name,
+      contactEmailObject.email,
+      contactEmailObject.body,
     );
 
-    try {
+    const nodeMailer: SMTPTransport.SentMessageInfo =
+      await this.emailService.sendContactMessage(
+        htmlContactMessage,
+        'Correo de contacto',
+      );
 
+    // eslint-disable-next-line no-useless-catch
+    try {
       // Nodemailer has accepted the request. All good
       if (nodeMailer.accepted.length) {
         return contactEmailObject;
       }
 
       // Nodemailer did not complete the request alert the user
-      throw new HttpErrors.InternalServerError(
-        'Error sending contact message',
-      );
-
+      throw new HttpErrors.InternalServerError('Error sending contact message');
     } catch (error) {
       throw error;
     }
-
-
   }
-
 }
