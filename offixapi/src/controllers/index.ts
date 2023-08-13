@@ -59,3 +59,4 @@ export * from './reset-brand.controller';
 export * from './sale-reset-user.controller';
 export * from './sale-reset-reset.controller';
 export * from './sale-reset.controller';
+export * from './multipleconfig.controller';
