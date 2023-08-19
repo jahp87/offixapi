@@ -88,6 +88,7 @@ export class Address extends Entity {
     required: true,
   })
   isPrincipal: boolean;
+  j
 
   @property({
     type: 'number',
