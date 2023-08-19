@@ -23,14 +23,15 @@ export * from './user-credentials.model';
 export * from './user.model';
 
 
-
 export * from './atribute.model';
-export * from './values.model';
-export * from './product-attribute-relation.model';
-export * from './review.model';
-export * from './sell-order.model';
-export * from './sell-order-details.model';
-export * from './consecutive.model';
-export * from './province.model';
 export * from './cat-shipping.model';
+export * from './consecutive.model';
+export * from './multipleconfig.model';
+export * from './product-attribute-relation.model';
+export * from './province.model';
+export * from './review.model';
 export * from './sale-reset.model';
+export * from './sell-order-details.model';
+export * from './sell-order.model';
+export * from './values.model';
+
